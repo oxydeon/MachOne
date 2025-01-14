@@ -1,0 +1,27 @@
+meta {
+  name: POST valve
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{api}}/devices/:id?appKey={{appKey}}&secretKey={{secretKey}}
+  body: json
+  auth: none
+}
+
+params:query {
+  appKey: {{appKey}}
+  secretKey: {{secretKey}}
+}
+
+params:path {
+  id: bfe2846d2a3cf89fbdzlaf
+}
+
+body:json {
+  [{
+    "code": "temp_set",
+    "value": 200
+  }]
+}

@@ -1,0 +1,20 @@
+meta {
+  name: GET one
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{api}}/devices/:id?appKey={{appKey}}&secretKey={{secretKey}}
+  body: none
+  auth: none
+}
+
+params:query {
+  appKey: {{appKey}}
+  secretKey: {{secretKey}}
+}
+
+params:path {
+  id: bfe2846d2a3cf89fbdzlaf
+}

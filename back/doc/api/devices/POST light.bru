@@ -1,0 +1,27 @@
+meta {
+  name: POST light
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{api}}/devices/:id?appKey={{appKey}}&secretKey={{secretKey}}
+  body: json
+  auth: none
+}
+
+params:query {
+  appKey: {{appKey}}
+  secretKey: {{secretKey}}
+}
+
+params:path {
+  id: bf69efce5f19e45815wqfa
+}
+
+body:json {
+  [{
+    "code": "switch_1",
+    "value": false
+  }]
+}
