@@ -1,0 +1,332 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "sourceType": "module",
+        "createDefaultProgram": true
+      },
+      "plugins": [
+        "@typescript-eslint",
+        "@stylistic"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:@stylistic/disable-legacy"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "warn",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "warn",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@stylistic/array-bracket-newline": [
+          "warn",
+          {
+            "multiline": true,
+            "minItems": 2
+          }
+        ],
+        "@stylistic/array-bracket-spacing": "warn",
+        "@stylistic/array-element-newline": [
+          "warn",
+          {
+            "multiline": true,
+            "minItems": 2
+          }
+        ],
+        "@stylistic/arrow-parens": "warn",
+        "@stylistic/arrow-spacing": "warn",
+        "@stylistic/block-spacing": "warn",
+        "@stylistic/brace-style": "warn",
+        "@stylistic/comma-dangle": [
+          "warn",
+          {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline",
+            "enums": "always-multiline"
+          }
+        ],
+        "@stylistic/comma-spacing": "warn",
+        "@stylistic/comma-style": "warn",
+        "@stylistic/computed-property-spacing": "warn",
+        "@stylistic/dot-location": [
+          "warn",
+          "property"
+        ],
+        "@stylistic/eol-last": "warn",
+        "@stylistic/func-call-spacing": "warn",
+        "@stylistic/function-call-argument-newline": [
+          "warn",
+          "consistent"
+        ],
+        "@stylistic/function-paren-newline": [
+          "warn",
+          "consistent"
+        ],
+        "@stylistic/generator-star-spacing": "warn",
+        "@stylistic/implicit-arrow-linebreak": [
+          "warn",
+          "beside"
+        ],
+        "@stylistic/indent": [
+          "warn",
+          2,
+          {
+            "ignoredNodes": [
+              "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+            ],
+            "SwitchCase": 1
+          }
+        ],
+        "@stylistic/key-spacing": "warn",
+        "@stylistic/keyword-spacing": "warn",
+        "@stylistic/linebreak-style": [
+          "warn",
+          "unix"
+        ],
+        "@stylistic/lines-around-comment": "warn",
+        "@stylistic/lines-between-class-members": "off",
+        "@stylistic/max-len": [
+          "warn",
+          {
+            "code": 120,
+            "ignorePattern": "import \\{"
+          }
+        ],
+        "@stylistic/max-statements-per-line": "warn",
+        "@stylistic/member-delimiter-style": "warn",
+        "@stylistic/multiline-ternary": [
+          "warn",
+          "always-multiline"
+        ],
+        "@stylistic/new-parens": "warn",
+        "@stylistic/newline-per-chained-call": "warn",
+        "@stylistic/no-confusing-arrow": "warn",
+        "@stylistic/no-extra-parens": [
+          "warn",
+          "all",
+          {
+            "enforceForArrowConditionals": false,
+            "nestedBinaryExpressions": false
+          }
+        ],
+        "@stylistic/no-extra-semi": "warn",
+        "@stylistic/no-floating-decimal": "warn",
+        "@stylistic/no-mixed-operators": "warn",
+        "@stylistic/no-mixed-spaces-and-tabs": "warn",
+        "@stylistic/no-multi-spaces": "warn",
+        "@stylistic/no-multiple-empty-lines": [
+          "warn",
+          {
+            "max": 1
+          }
+        ],
+        "@stylistic/no-tabs": "warn",
+        "@stylistic/no-trailing-spaces": "warn",
+        "@stylistic/no-whitespace-before-property": "warn",
+        "@stylistic/nonblock-statement-body-position": [
+          "warn",
+          "beside"
+        ],
+        "@stylistic/object-curly-newline": [
+          "warn",
+          {
+            "ObjectExpression": {
+              "multiline": true
+            },
+            "ImportDeclaration": "never"
+          }
+        ],
+        "@stylistic/object-curly-spacing": [
+          "warn",
+          "always"
+        ],
+        "@stylistic/object-property-newline": "warn",
+        "@stylistic/one-var-declaration-per-line": "off",
+        "@stylistic/operator-linebreak": [
+          "warn",
+          "before"
+        ],
+        "@stylistic/padded-blocks": "off",
+        "@stylistic/padding-line-between-statements": "off",
+        "@stylistic/quote-props": [
+          "warn",
+          "consistent-as-needed"
+        ],
+        "@stylistic/quotes": [
+          "warn",
+          "single"
+        ],
+        "@stylistic/rest-spread-spacing": "warn",
+        "@stylistic/semi": "warn",
+        "@stylistic/semi-spacing": "warn",
+        "@stylistic/semi-style": "warn",
+        "@stylistic/space-before-blocks": "warn",
+        "@stylistic/space-before-function-paren": [
+          "warn",
+          {
+            "named": "never",
+            "asyncArrow": "always"
+          }
+        ],
+        "@stylistic/space-in-parens": "warn",
+        "@stylistic/space-infix-ops": "warn",
+        "@stylistic/space-unary-ops": "warn",
+        "@stylistic/spaced-comment": "warn",
+        "@stylistic/switch-colon-spacing": "warn",
+        "@stylistic/template-curly-spacing": "warn",
+        "@stylistic/template-tag-spacing": "warn",
+        "@stylistic/type-annotation-spacing": "warn",
+        "@stylistic/wrap-iife": "warn",
+        "@stylistic/wrap-regex": "warn",
+        "@stylistic/yield-star-spacing": "warn",
+        "@typescript-eslint/array-type": "warn",
+        "@typescript-eslint/await-thenable": "warn",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "warn",
+          {
+            "accessibility": "no-public"
+          }
+        ],
+        "@typescript-eslint/lines-between-class-members": "off",
+        "@typescript-eslint/member-ordering": "warn",
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          {
+            "selector": "default",
+            "format": [
+              "strictCamelCase"
+            ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow"
+          },
+          {
+            "selector": "import",
+            "format": [
+              "strictCamelCase",
+              "PascalCase"
+            ]
+          },
+          {
+            "selector": "variable",
+            "format": [
+              "strictCamelCase",
+              "UPPER_CASE"
+            ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow"
+          },
+          {
+            "selector": "enumMember",
+            "format": [
+              "UPPER_CASE"
+            ]
+          },
+          {
+            "selector": "typeLike",
+            "format": [
+              "PascalCase"
+            ]
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-inferrable-types": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/require-await": "warn",
+        "class-methods-use-this": "off",
+        "complexity": [
+          "warn",
+          8
+        ],
+        "import/prefer-default-export": "off",
+        "max-classes-per-file": "off",
+        "max-lines": [
+          "warn",
+          {
+            "max": 300,
+            "skipBlankLines": true
+          }
+        ],
+        "max-statements": [
+          "warn",
+          40
+        ],
+        "no-console": [
+          "warn",
+          {
+            "allow": [
+              "warn",
+              "error"
+            ]
+          }
+        ],
+        "no-restricted-syntax": [
+          "warn",
+          "ForInStatement",
+          "ForOfStatement",
+          "LabeledStatement",
+          "WithStatement",
+          "Literal[value=null]"
+        ],
+        "no-unused-expressions": "off",
+        "no-unused-vars": "off",
+        "sort-imports": [
+          "warn",
+          {
+            "ignoreDeclarationSort": true
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/template/attributes-order": "warn",
+        "@angular-eslint/template/cyclomatic-complexity": "warn",
+        "@angular-eslint/template/no-duplicate-attributes": "warn",
+        "prettier/prettier": [
+          "warn",
+          {
+            "parser": "angular",
+            "singleAttributePerLine": true
+          }
+        ]
+      }
+    }
+  ]
+}
