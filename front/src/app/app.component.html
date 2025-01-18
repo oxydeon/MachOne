@@ -3,7 +3,7 @@
 >
   @for (device of devices; track $index) {
     @switch (device.category) {
-      @case (deviceValue.type.LIGHT) {
+      @case (deviceValues.type.LIGHT) {
         <div
           class="device light p-5"
           [class.light-on]="device.status?.[0].value"
@@ -20,14 +20,14 @@
         </div>
       }
 
-      @case (deviceValue.type.VALVE) {
+      @case (deviceValues.type.VALVE) {
         <div
           class="device p-5"
           [class.valve-auto]="
-            device.status?.[0].value === deviceValue.valve.mode.AUTO
+            device.status?.[0].value === deviceValues.valve.mode.AUTO
           "
           [class.valve-on]="
-            device.status?.[1].value === deviceValue.valve.state.OPEN
+            device.status?.[1].value === deviceValues.valve.state.OPEN
           "
           [class.offline]="!device.online"
         >

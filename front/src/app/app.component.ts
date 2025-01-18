@@ -3,7 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { catchError, delay, switchMap, tap } from 'rxjs';
-import { deviceValue, devicesList, refreshDelay, waitingDelay } from './config';
+import { environment } from '../env';
+import { deviceValues } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { DeviceApiService } from './shared/api/services/device-api.service';
@@ -21,7 +22,7 @@ import { DeviceApiService } from './shared/api/services/device-api.service';
 })
 export class AppComponent implements OnInit {
   baseUrl = window.location.origin;
-  deviceValue = deviceValue;
+  deviceValues = deviceValues;
 
   devices?: any[];
   errorMessage?: string;
@@ -43,13 +44,13 @@ export class AppComponent implements OnInit {
 
       setInterval(
         () => this.retrieveDevices(),
-        refreshDelay * 1000,
+        environment.refreshDelay * 1000,
       );
     });
   }
 
   retrieveDevices(): void {
-    this.deviceApiService.getDevices(Object.values(devicesList))
+    this.deviceApiService.getDevices(Object.values(environment.devicesList))
       .pipe(
         catchError((e: HttpErrorResponse) => {
           const { error, message } = e.error;
@@ -59,7 +60,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe((devices) => {
         // order devices
-        const devicesOrder = Object.keys(devicesList);
+        const devicesOrder = Object.keys(environment.devicesList);
         this.devices = devices.sort(
           (a, b) => devicesOrder.indexOf(a.name.trim()) - devicesOrder.indexOf(b.name.trim()),
         );
@@ -102,7 +103,7 @@ export class AppComponent implements OnInit {
           device.status[2].value = newValue;
         }),
         // wait for device to execute the command
-        delay(waitingDelay * 1000),
+        delay(environment.waitingDelay * 1000),
         // retrieve device status
         switchMap(() => this.deviceApiService.getDevice(device.id)),
       )

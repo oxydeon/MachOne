@@ -1,15 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../env';
 
 type QueryParam = string | number | boolean;
 
 @Injectable()
 export class Api {
-  // private readonly baseUrl = 'localhost:3004';
-  private readonly baseUrl = 'https://machone-back.onrender.com';
-  private appKey = '';
-  private secretKey = '';
+  private appKey?: string;
+  private secretKey?: string;
 
   constructor(
     private http: HttpClient,
@@ -29,7 +28,7 @@ export class Api {
     params?: { [key: string]: QueryParam },
   ): Observable<T> {
     return this.http.get<T>(
-      `${this.baseUrl}${endpoint}`,
+      `${environment.apiUrl}${endpoint}`,
       this.getOptions(params),
     );
   }
@@ -40,7 +39,7 @@ export class Api {
     params?: { [key: string]: QueryParam },
   ): Observable<T> {
     return this.http.post<T>(
-      `${this.baseUrl}${endpoint}`,
+      `${environment.apiUrl}${endpoint}`,
       body,
       this.getOptions(params),
     );
@@ -52,7 +51,7 @@ export class Api {
     params?: { [key: string]: QueryParam },
   ): Observable<T> {
     return this.http.patch<T>(
-      `${this.baseUrl}${endpoint}`,
+      `${environment.apiUrl}${endpoint}`,
       body,
       this.getOptions(params),
     );
@@ -63,7 +62,7 @@ export class Api {
     params?: { [key: string]: QueryParam },
   ): Observable<T> {
     return this.http.delete<T>(
-      `${this.baseUrl}${endpoint}`,
+      `${environment.apiUrl}${endpoint}`,
       this.getOptions(params),
     );
   }
@@ -78,8 +77,8 @@ export class Api {
     // set query params
     const params = {
       ...queryParams,
-      appKey: this.appKey,
-      secretKey: this.secretKey,
+      appKey: this.appKey || '',
+      secretKey: this.secretKey || '',
     };
 
     // set content type if not file upload
