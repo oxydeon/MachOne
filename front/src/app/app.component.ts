@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
       .pipe(
         catchError((e: HttpErrorResponse) => {
           const { error, message } = e.error;
-          this.errorMessage = `${error} - ${message}`;
+          this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
           return [];
         }),
       )

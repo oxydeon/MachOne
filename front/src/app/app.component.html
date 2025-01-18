@@ -40,29 +40,33 @@
           </h2>
 
           <div class="text-sm space-y-1">
-            <div class="degree">{{ device.status?.[3].value / 10 }}°</div>
-
-            <div class="set-degree">
-              <button
-                class="w-8 h-8"
-                (click)="setTemperature(device, -1)"
-              >
-                -
-              </button>
-              {{ device.status?.[2].value / 10 }}
-              <button
-                class="w-8 h-8"
-                (click)="setTemperature(device, 1)"
-              >
-                +
-              </button>
-            </div>
+            <div class="degree my-5">{{ device.status?.[3].value / 10 }}°</div>
+            @if (device.status?.[0].value !== deviceValues.valve.mode.OFF) {
+              <div class="set-degree">
+                <button
+                  class="w-8 h-8"
+                  [class.invisible]="
+                    device.status?.[2].value / 10 <= deviceValues.valve.minTemp
+                  "
+                  (click)="setTemperature(device, -1)"
+                >
+                  -
+                </button>
+                {{ device.status?.[2].value / 10 }}
+                <button
+                  class="w-8 h-8"
+                  (click)="setTemperature(device, 1)"
+                >
+                  +
+                </button>
+              </div>
+            }
           </div>
         </div>
       }
       @default {
         <div class="device p-6">
-          <h2 class="font-semibold uppercase mb-2">
+          <h2 class="font-semibold uppercase mb-4">
             {{ device.name }}
 
             @if (!device.online) {
@@ -93,7 +97,7 @@
     </a>
   } @else if (api.hasAuth() && errorMessage) {
     <span class="text-red-500">
-      Error: <br />
+      Error<br />
       {{ errorMessage }}</span
     >
   } @else if (api.hasAuth() && !devices) {

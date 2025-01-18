@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
+
 export const deviceValues = {
   type: {
     LIGHT: 'cz',
@@ -7,6 +8,7 @@ export const deviceValues = {
   },
   valve: {
     mode: {
+      OFF: 'off',
       AUTO: 'auto',
       MANUAL: 'manual',
     },
@@ -14,5 +16,6 @@ export const deviceValues = {
       OPEN: 'opened',
       CLOSE: 'closed',
     },
+    minTemp: 5,
   },
 };
