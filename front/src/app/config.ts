@@ -13,3 +13,20 @@ export const devicesList = {
   'Le vinyle': 'bfe4b8fb82086c6247yu1c',
   'La guirlande': 'bfc420473cb5dfa2c3zbqj',
 };
+
+export const deviceValue = {
+  type: {
+    LIGHT: 'cz',
+    VALVE: 'wkf',
+  },
+  valve: {
+    mode: {
+      AUTO: 'auto',
+      MANUAL: 'manual',
+    },
+    state: {
+      OPEN: 'opened',
+      CLOSE: 'closed',
+    },
+  },
+};

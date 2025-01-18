@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
-import { devicesList } from './config';
+import { deviceValue, devicesList } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { DeviceApiService } from './shared/api/services/device-api.service';
@@ -16,6 +16,7 @@ import { DeviceApiService } from './shared/api/services/device-api.service';
 })
 export class AppComponent implements OnInit {
   devices: any[] = [];
+  deviceValue = deviceValue;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
     ).subscribe((devices) => {
       const devicesOrder = Object.keys(devicesList);
       this.devices = devices.sort(
-        (a, b) => devicesOrder.indexOf(a.name) - devicesOrder.indexOf(b.name),
+        (a, b) => devicesOrder.indexOf(a.name.trim()) - devicesOrder.indexOf(b.name.trim()),
       );
     });
   }

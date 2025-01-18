@@ -1,3 +1,62 @@
-@for (device of devices; track $index) {
-<h2>{{ device.name }} {{ device.category }}</h2>
-}
+<div
+  class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-8 p-8"
+>
+  @for (device of devices; track $index) {
+    @switch (device.category) {
+      @case (deviceValue.type.LIGHT) {
+        <div
+          class="device p-6"
+          [class.light-on]="device.status?.[0].value"
+          [class.offline]="!device.online"
+        >
+          <h2 class="font-semibold uppercase mb-2">
+            {{ device.name }}
+
+            @if (!device.online) {
+              <span class="text-red-500">●</span>
+            }
+          </h2>
+        </div>
+      }
+
+      @case (deviceValue.type.VALVE) {
+        <div
+          class="device p-5"
+          [class.valve-auto]="
+            device.status?.[0].value === deviceValue.valve.mode.AUTO
+          "
+          [class.valve-on]="
+            device.status?.[1].value === deviceValue.valve.state.OPEN
+          "
+          [class.offline]="!device.online"
+        >
+          <h2 class="font-semibold uppercase mb-2">
+            {{ device.name }}
+
+            @if (!device.online) {
+              <span class="text-red-500">●</span>
+            }
+          </h2>
+          <div class="text-sm space-y-1">
+            <div class="degree">{{ device.status?.[3].value / 10 }}°</div>
+            <div>
+              {{ device.status?.[2].code }}: {{ device.status?.[2].value / 10 }}
+            </div>
+          </div>
+        </div>
+      }
+      @default {
+        <div class="device p-6">
+          <h2 class="font-semibold uppercase mb-2">
+            {{ device.name }}
+
+            @if (!device.online) {
+              <span class="text-red-500">●</span>
+            }
+          </h2>
+          <div class="text-sm text-red-500 uppercase">Unknown</div>
+        </div>
+      }
+    }
+  }
+</div>
