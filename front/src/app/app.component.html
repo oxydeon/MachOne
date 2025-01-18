@@ -5,9 +5,10 @@
     @switch (device.category) {
       @case (deviceValue.type.LIGHT) {
         <div
-          class="device p-6"
+          class="device light p-5"
           [class.light-on]="device.status?.[0].value"
           [class.offline]="!device.online"
+          (click)="toggleLight(device)"
         >
           <h2 class="font-semibold uppercase mb-2">
             {{ device.name }}
@@ -37,10 +38,24 @@
               <span class="text-red-500">●</span>
             }
           </h2>
+
           <div class="text-sm space-y-1">
             <div class="degree">{{ device.status?.[3].value / 10 }}°</div>
-            <div>
-              {{ device.status?.[2].code }}: {{ device.status?.[2].value / 10 }}
+
+            <div class="set-degree">
+              <button
+                class="w-8 h-8"
+                (click)="setTemperature(device, -1)"
+              >
+                -
+              </button>
+              {{ device.status?.[2].value / 10 }}
+              <button
+                class="w-8 h-8"
+                (click)="setTemperature(device, 1)"
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
@@ -54,9 +69,31 @@
               <span class="text-red-500">●</span>
             }
           </h2>
+
           <div class="text-sm text-red-500 uppercase">Unknown</div>
         </div>
       }
     }
   }
 </div>
+
+@if (devices && !devices.length) {
+  <div class="text-center text-gray-500">No devices found</div>
+}
+
+@if (!devices) {
+  <div class="text-center text-gray-500">
+    You need to provide credentials like this:
+    <br />
+    <a
+      class="text-center text-gray-500"
+      [routerLink]="['/']"
+      [queryParams]="{
+        appKey: 'APP_KEY',
+        secretKey: 'SECRET_KEY',
+      }"
+    >
+      {{ baseUrl }}?appKey=APP_KEY&secretKey=SECRET_KEY
+    </a>
+  </div>
+}

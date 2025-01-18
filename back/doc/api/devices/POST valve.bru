@@ -20,8 +20,10 @@ params:path {
 }
 
 body:json {
-  [{
-    "code": "temp_set",
-    "value": 200
-  }]
+  {
+    "commands":[{
+      "code": "temp_set",
+      "value": 200
+    }]
+  }
 }

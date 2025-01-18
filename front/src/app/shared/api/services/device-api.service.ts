@@ -29,7 +29,7 @@ export class DeviceApiService {
     }[],
   ): Observable<void> {
     return this.api.post<void>(
-      `${this.endPoint}/${deviceId}/commands`,
+      `${this.endPoint}/${deviceId}`,
       { commands },
     );
   }
