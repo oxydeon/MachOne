@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { delay, switchMap, tap } from 'rxjs';
+import { catchError, delay, switchMap, tap } from 'rxjs';
 import { deviceValue, devicesList, refreshDelay, waitingDelay } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
@@ -20,12 +21,14 @@ import { DeviceApiService } from './shared/api/services/device-api.service';
 })
 export class AppComponent implements OnInit {
   baseUrl = window.location.origin;
-  devices?: any[];
   deviceValue = deviceValue;
+
+  devices?: any[];
+  errorMessage?: string;
 
   constructor(
     private route: ActivatedRoute,
-    private api: Api,
+    public api: Api,
     private deviceApiService: DeviceApiService,
   ) { }
 
@@ -46,13 +49,21 @@ export class AppComponent implements OnInit {
   }
 
   retrieveDevices(): void {
-    this.deviceApiService.getDevices(Object.values(devicesList)).subscribe((devices) => {
-      // order devices
-      const devicesOrder = Object.keys(devicesList);
-      this.devices = devices.sort(
-        (a, b) => devicesOrder.indexOf(a.name.trim()) - devicesOrder.indexOf(b.name.trim()),
-      );
-    });
+    this.deviceApiService.getDevices(Object.values(devicesList))
+      .pipe(
+        catchError((e: HttpErrorResponse) => {
+          const { error, message } = e.error;
+          this.errorMessage = `${error} - ${message}`;
+          return [];
+        }),
+      )
+      .subscribe((devices) => {
+        // order devices
+        const devicesOrder = Object.keys(devicesList);
+        this.devices = devices.sort(
+          (a, b) => devicesOrder.indexOf(a.name.trim()) - devicesOrder.indexOf(b.name.trim()),
+        );
+      });
   }
 
   toggleLight(device: any): void {

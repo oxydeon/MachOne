@@ -15,6 +15,10 @@ export class Api {
     private http: HttpClient,
   ) { }
 
+  hasAuth(): boolean {
+    return !!this.appKey && !!this.secretKey;
+  }
+
   auth(appKey: string, secretKey: string): void {
     this.appKey = appKey;
     this.secretKey = secretKey;
@@ -68,9 +72,9 @@ export class Api {
   private getOptions(
     queryParams: { [key: string]: QueryParam } = {},
   ): {
-      headers: HttpHeaders;
-      params: { [key: string]: QueryParam };
-    } {
+    headers: HttpHeaders;
+    params: { [key: string]: QueryParam };
+  } {
     // set query params
     const params = {
       ...queryParams,

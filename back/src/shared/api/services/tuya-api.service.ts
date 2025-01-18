@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as crypto from 'crypto';
 import * as qs from 'qs';
 
@@ -37,7 +37,7 @@ export class TuyaApiService {
       data: body,
     });
 
-    if (!data?.success) throw Error(`Request error: ${data.msg}`);
+    if (!data?.success) throw new BadRequestException(`${data.msg}`);
 
     return data.result;
   }
@@ -104,7 +104,7 @@ export class TuyaApiService {
       },
     );
 
-    if (!data?.success || !data?.result?.access_token) throw Error(`Auth error: ${data.msg}`);
+    if (!data?.success || !data?.result?.access_token) throw new UnauthorizedException(`${data.msg}`);
 
     return data.result?.access_token;
   }
