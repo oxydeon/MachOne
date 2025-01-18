@@ -1,5 +1,5 @@
 <div
-  class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-8 p-8"
+  class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 p-5"
 >
   @for (device of devices; track $index) {
     @switch (device.category) {
@@ -10,7 +10,7 @@
           [class.offline]="!device.online"
           (click)="toggleLight(device)"
         >
-          <h2 class="font-semibold uppercase mb-2">
+          <h2 class="font-semibold uppercase mb-4 text-sm">
             {{ device.name }}
 
             @if (!device.online) {
@@ -31,7 +31,7 @@
           "
           [class.offline]="!device.online"
         >
-          <h2 class="font-semibold uppercase mb-2">
+          <h2 class="font-semibold uppercase mb-4 text-sm">
             {{ device.name }}
 
             @if (!device.online) {
@@ -39,34 +39,40 @@
             }
           </h2>
 
-          <div class="text-sm space-y-1">
-            <div class="degree my-5">{{ device.status?.[3].value / 10 }}°</div>
-            @if (device.status?.[0].value !== deviceValues.valve.mode.OFF) {
-              <div class="set-degree">
-                <button
-                  class="w-8 h-8"
-                  [class.invisible]="
-                    device.status?.[2].value / 10 <= deviceValues.valve.minTemp
-                  "
-                  (click)="setTemperature(device, -1)"
-                >
-                  -
-                </button>
-                {{ device.status?.[2].value / 10 }}
-                <button
-                  class="w-8 h-8"
-                  (click)="setTemperature(device, 1)"
-                >
-                  +
-                </button>
+          @if (device.online) {
+            <div class="text-sm space-y-1">
+              <div class="degree my-5">
+                {{ device.status?.[3].value / 10 }}°
               </div>
-            }
-          </div>
+
+              @if (device.status?.[0].value !== deviceValues.valve.mode.OFF) {
+                <div class="set-degree">
+                  <button
+                    class="w-8 h-8"
+                    [class.invisible]="
+                      device.status?.[2].value / 10 <=
+                      deviceValues.valve.minTemp
+                    "
+                    (click)="setTemperature(device, -1)"
+                  >
+                    -
+                  </button>
+                  {{ device.status?.[2].value / 10 }}
+                  <button
+                    class="w-8 h-8"
+                    (click)="setTemperature(device, 1)"
+                  >
+                    +
+                  </button>
+                </div>
+              }
+            </div>
+          }
         </div>
       }
       @default {
         <div class="device p-6">
-          <h2 class="font-semibold uppercase mb-4">
+          <h2 class="font-semibold uppercase mb-4 text-sm">
             {{ device.name }}
 
             @if (!device.online) {

@@ -5,8 +5,16 @@
 @tailwind utilities;
 
 body {
+  max-width: 1400px;
+  margin: 0 auto;
   background-color: #081028;
   color: whitesmoke;
   cursor: default;
   user-select: none;
+}
+
+@media (min-width: 1024px) {
+  body {
+    margin: 15vh auto 0 auto;
+  }
 }

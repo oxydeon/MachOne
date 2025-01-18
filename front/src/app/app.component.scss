@@ -1,5 +1,5 @@
 .device {
-  min-height: 15vh;
+  min-height: 100px;
   background: #0b1739;
   border: 0.1px solid rgba(255, 255, 255, 0.1);
   border-radius: 25px;
@@ -12,7 +12,6 @@
 
 .degree {
   font-size: 3rem;
-  line-height: 1.2;
   text-align: center;
 }
 
