@@ -27,7 +27,7 @@ export class DeviceValvetComponent {
     return device.status?.[0]?.value;
   }
 
-  getValveStatus(device: any): string {
+  getValveState(device: any): string {
     return device.status?.[1]?.value;
   }
 

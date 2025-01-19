@@ -1,7 +1,7 @@
 <div
   class="device p-5"
   [class.valve-auto]="getValveMode(device) === deviceValues.valve.mode.AUTO"
-  [class.valve-on]="getValveStatus(device) === deviceValues.valve.state.OPEN"
+  [class.valve-on]="getValveState(device) === deviceValues.valve.state.OPEN"
   [class.offline]="!device.online"
 >
   <h2 class="font-semibold uppercase text-sm">
@@ -47,7 +47,7 @@
       @if (!device.online) {
         <span class="material-icons text-xl/[24px]">cloud_off</span>
       }
-      @if (getValveStatus(device) === deviceValues.valve.state.OPEN) {
+      @if (getValveState(device) === deviceValues.valve.state.OPEN) {
         <span class="material-icons text-xl/[24px]">
           local_fire_department
         </span>

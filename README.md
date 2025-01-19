@@ -2,15 +2,19 @@
 
 Tuya web app alternative
 
+## Screenshot
+
+![screenshot](screenshot.png)
+
 ## Install & start
 
-### Back
+### Back (NestJS)
 
 - `cd back`
 - `npm install`
 - `npm start`
 
-### Front
+### Front (Angular)
 
 - `cd front`
 - `npm install`
