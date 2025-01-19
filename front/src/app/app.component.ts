@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   baseUrl = window.location.origin;
   deviceValues = deviceValues;
 
+  devicesIds: string[] = [];
   devices?: any[];
   errorMessage?: string;
 
@@ -35,10 +36,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // retrieve credentials from query params
-    this.route.queryParams.subscribe((params) => {
-      if (!params['appKey'] || !params['secretKey']) return;
+    this.route.queryParams.subscribe(({ appKey, secretKey, devices }) => {
+      if (!appKey || !secretKey || !devices) return;
 
-      this.api.auth(params['appKey'], params['secretKey']);
+      this.api.auth(appKey, secretKey);
+      this.devicesIds = devices.split(',');
 
       this.retrieveDevices();
 
@@ -50,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   retrieveDevices(): void {
-    this.deviceApiService.getDevices(Object.values(environment.devicesList))
+    this.deviceApiService.getDevices(this.devicesIds)
       .pipe(
         catchError((e: HttpErrorResponse) => {
           const { error, message } = e.error;
@@ -60,9 +62,8 @@ export class AppComponent implements OnInit {
       )
       .subscribe((devices) => {
         // order devices
-        const devicesOrder = Object.keys(environment.devicesList);
         this.devices = devices.sort(
-          (a, b) => devicesOrder.indexOf(a.name.trim()) - devicesOrder.indexOf(b.name.trim()),
+          (a, b) => this.devicesIds.indexOf(a.id) - this.devicesIds.indexOf(b.id),
         );
       });
   }

@@ -97,9 +97,12 @@
       [queryParams]="{
         appKey: 'APP_KEY',
         secretKey: 'SECRET_KEY',
+        devices: 'DEVICE_ID_1,DEVICE_ID_2,...',
       }"
     >
-      {{ baseUrl }}?appKey=APP_KEY&secretKey=SECRET_KEY
+      {{
+        baseUrl
+      }}?appKey=APP_KEY&secretKey=SECRET_KEY?devices=DEVICE_ID_1,DEVICE_ID_2,...
     </a>
   } @else if (api.hasAuth() && errorMessage) {
     <span class="text-red-500">
