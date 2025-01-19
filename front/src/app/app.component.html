@@ -51,7 +51,7 @@
                     class="w-8 h-8"
                     [class.invisible]="
                       device.status?.[2].value / 10 <=
-                      deviceValues.valve.minTemp
+                      deviceValues.valve.temp.min
                     "
                     (click)="setTemperature(device, -1)"
                   >
@@ -60,6 +60,10 @@
                   {{ device.status?.[2].value / 10 }}
                   <button
                     class="w-8 h-8"
+                    [class.invisible]="
+                      device.status?.[2].value / 10 >=
+                      deviceValues.valve.temp.max
+                    "
                     (click)="setTemperature(device, 1)"
                   >
                     +

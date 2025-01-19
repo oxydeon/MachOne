@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-
 export const deviceValues = {
   type: {
     LIGHT: 'cz',
@@ -16,6 +15,9 @@ export const deviceValues = {
       OPEN: 'opened',
       CLOSE: 'closed',
     },
-    minTemp: 5,
+    temp: {
+      min: 5,
+      max: 35,
+    },
   },
 };
