@@ -1,0 +1,81 @@
+<div
+  class="device p-5"
+  [class.valve-auto]="getValveMode(device) === deviceValues.valve.mode.AUTO"
+  [class.valve-on]="getValveStatus(device) === deviceValues.valve.state.OPEN"
+  [class.offline]="!device.online"
+>
+  <h2 class="font-semibold uppercase text-sm">
+    {{ device.name }}
+  </h2>
+
+  <div class="flex relative">
+    <div
+      class="text-sm space-y-1 w-5/6"
+      [class.invisible]="!device.online"
+    >
+      <div class="degree my-5">{{ getTemperature(device) }}°</div>
+
+      <div
+        class="set-degree"
+        [class.invisible]="getValveMode(device) === deviceValues.valve.mode.OFF"
+      >
+        <button
+          class="w-8 h-8"
+          [class.invisible]="
+            getTemperatureSet(device) <= deviceValues.valve.temp.min
+          "
+          (click)="setTemperature(device, -1)"
+        >
+          -
+        </button>
+        {{ getTemperatureSet(device) }}
+        <button
+          class="w-8 h-8"
+          [class.invisible]="
+            getTemperatureSet(device) >= deviceValues.valve.temp.max
+          "
+          (click)="setTemperature(device, 1)"
+        >
+          +
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0.5 w-6/6"
+    >
+      @if (!device.online) {
+        <span class="material-icons text-xl/[24px]">cloud_off</span>
+      }
+      @if (getValveStatus(device) === deviceValues.valve.state.OPEN) {
+        <span class="material-icons text-xl/[24px]">
+          local_fire_department
+        </span>
+      }
+      @if (getValveMode(device) === deviceValues.valve.mode.OFF) {
+        <span
+          class="material-icons text-xl/[24px] cursor-pointer"
+          (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+        >
+          power_settings_new
+        </span>
+      }
+      @if (getValveMode(device) === deviceValues.valve.mode.AUTO) {
+        <span
+          class="material-icons text-xl/[24px] cursor-pointer"
+          (click)="setMode(device, deviceValues.valve.mode.MANUAL)"
+        >
+          schedule
+        </span>
+      }
+      @if (getValveMode(device) === deviceValues.valve.mode.MANUAL) {
+        <span
+          class="material-icons text-xl/[24px] cursor-pointer"
+          (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+        >
+          device_thermostat
+        </span>
+      }
+    </div>
+  </div>
+</div>

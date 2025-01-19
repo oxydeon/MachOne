@@ -2,21 +2,26 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { catchError, delay, switchMap, tap } from 'rxjs';
+import { catchError } from 'rxjs';
 import { environment } from '../env';
 import { deviceValues } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { DeviceApiService } from './shared/api/services/device-api.service';
+import { DeviceLightComponent } from './shared/device/components/light/light.component';
+import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
+import { DeviceValvetComponent } from './shared/device/components/valve/valve.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
   standalone: true,
   imports: [
     CoreModule,
     RouterModule,
+    DeviceUnknowComponent,
+    DeviceLightComponent,
+    DeviceValvetComponent,
   ],
   providers: [DeviceApiService],
 })
@@ -65,101 +70,6 @@ export class AppComponent implements OnInit {
         this.devices = devices.sort(
           (a, b) => this.devicesIds.indexOf(a.id) - this.devicesIds.indexOf(b.id),
         );
-      });
-  }
-
-  getLightStatus(device: any): boolean {
-    return device.status?.[0]?.value;
-  }
-
-  getValveMode(device: any): string {
-    return device.status?.[0]?.value;
-  }
-
-  getValveStatus(device: any): string {
-    return device.status?.[1]?.value;
-  }
-
-  getTemperature(device: any): number {
-    return (device.status?.[3]?.value ?? 0) / 10;
-  }
-
-  getTemperatureSet(device: any): number {
-    return (device.status?.[2]?.value ?? 0) / 10;
-  }
-
-  toggleLight(device: any): void {
-    if (!device.online) return;
-
-    const newValue = !device.status?.[0].value;
-    this.deviceApiService.setDevice(
-      device.id,
-      [
-        {
-          code: 'switch_1',
-          value: newValue,
-        },
-      ],
-    ).subscribe(() => {
-      device.status[0].value = newValue;
-    });
-  }
-
-  setTemperature(device: any, change: number): void {
-    const newValue = device.status[2].value + (change * 10);
-
-    this.setValve(
-      device,
-      [
-        {
-          code: 'temp_set',
-          value: newValue,
-        },
-      ],
-      () => {
-        device.status[2].value = newValue;
-      },
-    );
-  }
-
-  setMode(device: any, mode: string): void {
-    this.setValve(
-      device,
-      [
-        {
-          code: 'mode',
-          value: mode,
-        },
-      ],
-      () => {
-        device.status[0].value = mode;
-      },
-    );
-  }
-
-  setValve(
-    device: any,
-    commands: {
-      code: string;
-      value: unknown;
-    }[],
-    onSuccess: () => void,
-  ): void {
-    if (!device.online) return;
-
-    this.deviceApiService.setDevice(device.id, commands)
-      .pipe(
-        tap(() => {
-          onSuccess();
-        }),
-        // wait for device to execute the command
-        delay(environment.waitingDelay * 1000),
-        // retrieve device status
-        switchMap(() => this.deviceApiService.getDevice(device.id)),
-      )
-      .subscribe((result) => {
-        // update device status
-        device.status = result.status;
       });
   }
 }

@@ -1,0 +1,33 @@
+<div
+  class="device cursor-pointer p-5"
+  [class.light-on]="getLightStatus(device)"
+  [class.offline]="!device.online"
+  (click)="toggleLight(device)"
+>
+  <h2 class="font-semibold uppercase text-sm">
+    {{ device.name }}
+  </h2>
+
+  <div class="flex relative">
+    <div
+      class="text-sm space-y-1 w-5/6"
+      [class.invisible]="!device.online"
+    >
+      <div class="my-2">&nbsp;</div>
+    </div>
+
+    <div
+      class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0 w-6/6"
+    >
+      @if (!device.online) {
+        <span class="material-icons text-xl/[24px]">cloud_off</span>
+      }
+      <span
+        class="material-icons text-xl/[24px] cursor-pointer"
+        [class.text-gray-500]="!getLightStatus(device)"
+      >
+        lightbulb
+      </span>
+    </div>
+  </div>
+</div>

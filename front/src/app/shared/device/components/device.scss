@@ -1,0 +1,15 @@
+.device {
+  background: #0b1739;
+  border: 0.1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.offline {
+  background: #0b1739;
+  border: 0.1px solid rgba(255, 255, 255, 0.1);
+}
