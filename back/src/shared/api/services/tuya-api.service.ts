@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpService } from '@nestjs/axios';
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import * as crypto from 'crypto';
 import * as qs from 'qs';
 
+type QueryParam = string | number | boolean;
+
 @Injectable()
 export class TuyaApiService {
+  private logger = new Logger(TuyaApiService.name);
   private readonly baseUrl: string = 'https://openapi.tuyaeu.com';
 
   constructor(
@@ -17,7 +20,7 @@ export class TuyaApiService {
     secretKey: string,
     method: string,
     endPoint: string,
-    query: { [k: string]: string } = {},
+    query: { [k: string]: QueryParam } = {},
     body: { [k: string]: unknown } = {},
   ): Promise<T> {
     const headers = await this.getRequestSign(
@@ -37,7 +40,10 @@ export class TuyaApiService {
       data: body,
     });
 
-    if (!data?.success) throw new BadRequestException(`${data.msg}`);
+    if (!data?.success) {
+      this.logger.error(`${data.code} ${data.msg}`);
+      throw new BadRequestException(`${data.msg}`);
+    }
 
     return data.result;
   }
@@ -47,7 +53,7 @@ export class TuyaApiService {
     secretKey: string,
     method: string,
     endPoint: string,
-    query: { [k: string]: string } = {},
+    query: { [k: string]: QueryParam } = {},
     body: { [k: string]: unknown } = {},
   ): Promise<{ [k: string]: string }> {
     const token = await this.getToken(appKey, secretKey);
@@ -104,8 +110,10 @@ export class TuyaApiService {
       },
     );
 
-    if (!data?.success || !data?.result?.access_token) throw new UnauthorizedException(`${data.msg}`);
-
+    if (!data?.success || !data?.result?.access_token) {
+      this.logger.error(`${data.code} ${data.msg}`);
+      throw new UnauthorizedException(`${data.msg}`);
+    }
     return data.result?.access_token;
   }
 
