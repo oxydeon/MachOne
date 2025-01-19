@@ -5,18 +5,37 @@
     @switch (device.category) {
       @case (deviceValues.type.LIGHT) {
         <div
-          class="device light p-5"
-          [class.light-on]="device.status?.[0].value"
+          class="device cursor-pointer p-5"
+          [class.light-on]="getLightStatus(device)"
           [class.offline]="!device.online"
           (click)="toggleLight(device)"
         >
-          <h2 class="font-semibold uppercase mb-4 text-sm">
+          <h2 class="font-semibold uppercase text-sm">
             {{ device.name }}
-
-            @if (!device.online) {
-              <span class="text-red-500">●</span>
-            }
           </h2>
+
+          <div class="flex relative">
+            <div
+              class="text-sm space-y-1 w-5/6"
+              [class.invisible]="!device.online"
+            >
+              <div class="my-2">&nbsp;</div>
+            </div>
+
+            <div
+              class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0 w-6/6"
+            >
+              @if (!device.online) {
+                <span class="material-icons text-xl/[24px]">cloud_off</span>
+              }
+              <span
+                class="material-icons text-xl/[24px] cursor-pointer"
+                [class.text-gray-500]="!getLightStatus(device)"
+              >
+                lightbulb
+              </span>
+            </div>
+          </div>
         </div>
       }
 
@@ -24,67 +43,113 @@
         <div
           class="device p-5"
           [class.valve-auto]="
-            device.status?.[0].value === deviceValues.valve.mode.AUTO
+            getValveMode(device) === deviceValues.valve.mode.AUTO
           "
           [class.valve-on]="
-            device.status?.[1].value === deviceValues.valve.state.OPEN
+            getValveStatus(device) === deviceValues.valve.state.OPEN
           "
           [class.offline]="!device.online"
         >
-          <h2 class="font-semibold uppercase mb-4 text-sm">
+          <h2 class="font-semibold uppercase text-sm">
             {{ device.name }}
-
-            @if (!device.online) {
-              <span class="text-red-500">●</span>
-            }
           </h2>
 
-          @if (device.online) {
-            <div class="text-sm space-y-1">
-              <div class="degree my-5">
-                {{ device.status?.[3].value / 10 }}°
-              </div>
+          <div class="flex relative">
+            <div
+              class="text-sm space-y-1 w-5/6"
+              [class.invisible]="!device.online"
+            >
+              <div class="degree my-5">{{ getTemperature(device) }}°</div>
 
-              @if (device.status?.[0].value !== deviceValues.valve.mode.OFF) {
-                <div class="set-degree">
-                  <button
-                    class="w-8 h-8"
-                    [class.invisible]="
-                      device.status?.[2].value / 10 <=
-                      deviceValues.valve.temp.min
-                    "
-                    (click)="setTemperature(device, -1)"
-                  >
-                    -
-                  </button>
-                  {{ device.status?.[2].value / 10 }}
-                  <button
-                    class="w-8 h-8"
-                    [class.invisible]="
-                      device.status?.[2].value / 10 >=
-                      deviceValues.valve.temp.max
-                    "
-                    (click)="setTemperature(device, 1)"
-                  >
-                    +
-                  </button>
-                </div>
+              <div
+                class="set-degree"
+                [class.invisible]="
+                  getValveMode(device) === deviceValues.valve.mode.OFF
+                "
+              >
+                <button
+                  class="w-8 h-8"
+                  [class.invisible]="
+                    getTemperatureSet(device) <= deviceValues.valve.temp.min
+                  "
+                  (click)="setTemperature(device, -1)"
+                >
+                  -
+                </button>
+                {{ getTemperatureSet(device) }}
+                <button
+                  class="w-8 h-8"
+                  [class.invisible]="
+                    getTemperatureSet(device) >= deviceValues.valve.temp.max
+                  "
+                  (click)="setTemperature(device, 1)"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0.5 w-6/6"
+            >
+              @if (!device.online) {
+                <span class="material-icons text-xl/[24px]">cloud_off</span>
+              }
+              @if (getValveStatus(device) === deviceValues.valve.state.OPEN) {
+                <span class="material-icons text-xl/[24px]">
+                  local_fire_department
+                </span>
+              }
+              @if (getValveMode(device) === deviceValues.valve.mode.OFF) {
+                <span
+                  class="material-icons text-xl/[24px] cursor-pointer"
+                  (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+                >
+                  power_settings_new
+                </span>
+              }
+              @if (getValveMode(device) === deviceValues.valve.mode.AUTO) {
+                <span
+                  class="material-icons text-xl/[24px] cursor-pointer"
+                  (click)="setMode(device, deviceValues.valve.mode.MANUAL)"
+                >
+                  schedule
+                </span>
+              }
+              @if (getValveMode(device) === deviceValues.valve.mode.MANUAL) {
+                <span
+                  class="material-icons text-xl/[24px] cursor-pointer"
+                  (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+                >
+                  device_thermostat
+                </span>
               }
             </div>
-          }
+          </div>
         </div>
       }
       @default {
-        <div class="device p-6">
-          <h2 class="font-semibold uppercase mb-4 text-sm">
+        <div class="device p-5">
+          <h2 class="font-semibold uppercase text-sm">
             {{ device.name }}
-
-            @if (!device.online) {
-              <span class="text-red-500">●</span>
-            }
           </h2>
 
-          <div class="text-sm text-red-500 uppercase">Unknown</div>
+          <div class="flex relative">
+            <div class="text-sm space-y-1 w-5/6">
+              <div class="my-2 text-sm text-red-500 uppercase">Unknown</div>
+            </div>
+
+            <div
+              class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0 w-6/6"
+            >
+              @if (!device.online) {
+                <span class="material-icons text-xl/[24px]">cloud_off</span>
+              }
+              <span class="material-icons text-xl/[24px] text-gray-500">
+                question_mark
+              </span>
+            </div>
+          </div>
         </div>
       }
     }

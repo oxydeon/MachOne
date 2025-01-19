@@ -1,5 +1,4 @@
 .device {
-  min-height: 100px;
   background: #0b1739;
   border: 0.1px solid rgba(255, 255, 255, 0.1);
   border-radius: 25px;
@@ -18,10 +17,6 @@
 .set-degree {
   font-size: 1.3rem;
   text-align: center;
-}
-
-.light {
-  cursor: pointer;
 }
 
 .light-on {

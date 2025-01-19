@@ -71,9 +71,9 @@ export class Api {
   private getOptions(
     queryParams: { [key: string]: QueryParam } = {},
   ): {
-    headers: HttpHeaders;
-    params: { [key: string]: QueryParam };
-  } {
+      headers: HttpHeaders;
+      params: { [key: string]: QueryParam };
+    } {
     // set query params
     const params = {
       ...queryParams,

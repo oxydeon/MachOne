@@ -68,6 +68,26 @@ export class AppComponent implements OnInit {
       });
   }
 
+  getLightStatus(device: any): boolean {
+    return device.status?.[0]?.value;
+  }
+
+  getValveMode(device: any): string {
+    return device.status?.[0]?.value;
+  }
+
+  getValveStatus(device: any): string {
+    return device.status?.[1]?.value;
+  }
+
+  getTemperature(device: any): number {
+    return (device.status?.[3]?.value ?? 0) / 10;
+  }
+
+  getTemperatureSet(device: any): number {
+    return (device.status?.[2]?.value ?? 0) / 10;
+  }
+
   toggleLight(device: any): void {
     if (!device.online) return;
 
@@ -86,22 +106,51 @@ export class AppComponent implements OnInit {
   }
 
   setTemperature(device: any, change: number): void {
-    if (!device.online) return;
-
     const newValue = device.status[2].value + (change * 10);
-    this.deviceApiService.setDevice(
-      device.id,
+
+    this.setValve(
+      device,
       [
         {
           code: 'temp_set',
           value: newValue,
         },
       ],
-    )
+      () => {
+        device.status[2].value = newValue;
+      },
+    );
+  }
+
+  setMode(device: any, mode: string): void {
+    this.setValve(
+      device,
+      [
+        {
+          code: 'mode',
+          value: mode,
+        },
+      ],
+      () => {
+        device.status[0].value = mode;
+      },
+    );
+  }
+
+  setValve(
+    device: any,
+    commands: {
+      code: string;
+      value: unknown;
+    }[],
+    onSuccess: () => void,
+  ): void {
+    if (!device.online) return;
+
+    this.deviceApiService.setDevice(device.id, commands)
       .pipe(
-        // update device temperature
         tap(() => {
-          device.status[2].value = newValue;
+          onSuccess();
         }),
         // wait for device to execute the command
         delay(environment.waitingDelay * 1000),
