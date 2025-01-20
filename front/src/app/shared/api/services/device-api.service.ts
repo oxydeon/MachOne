@@ -4,7 +4,7 @@ import { Api } from '../../../core/api/services/api.service';
 
 @Injectable()
 export class DeviceApiService {
-  private readonly endPoint = '/devices';
+  private endpoint = '/devices';
 
   constructor(
     private api: Api,
@@ -12,13 +12,13 @@ export class DeviceApiService {
 
   getDevices(devices: string[]): Observable<any[]> {
     return this.api.get(
-      this.endPoint,
+      this.endpoint,
       { devices: devices.join(',') },
     );
   }
 
   getDevice(deviceId: string): Observable<any> {
-    return this.api.get(`${this.endPoint}/${deviceId}`);
+    return this.api.get(`${this.endpoint}/${deviceId}`);
   }
 
   setDevice(
@@ -29,7 +29,7 @@ export class DeviceApiService {
     }[],
   ): Observable<void> {
     return this.api.post<void>(
-      `${this.endPoint}/${deviceId}`,
+      `${this.endpoint}/${deviceId}`,
       { commands },
     );
   }

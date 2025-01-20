@@ -21,7 +21,7 @@ export class TuyaApiService {
     appKey: string,
     secretKey: string,
     method: string,
-    endPoint: string,
+    endpoint: string,
     query: { [k: string]: QueryParam } = {},
     body: { [k: string]: unknown } = {},
   ): Promise<T> {
@@ -29,14 +29,14 @@ export class TuyaApiService {
       appKey,
       secretKey,
       method,
-      endPoint,
+      endpoint,
       query,
       body,
     );
 
     const { data } = await this.httpService.axiosRef.request({
       method,
-      url: this.baseUrl + endPoint,
+      url: this.baseUrl + endpoint,
       headers,
       params: query,
       data: body,
@@ -54,7 +54,7 @@ export class TuyaApiService {
     appKey: string,
     secretKey: string,
     method: string,
-    endPoint: string,
+    endpoint: string,
     query: { [k: string]: QueryParam } = {},
     body: { [k: string]: unknown } = {},
   ): Promise<{ [k: string]: string }> {
@@ -62,7 +62,7 @@ export class TuyaApiService {
 
     const timestamp = Date.now().toString();
     const queryString = decodeURIComponent(qs.stringify(query));
-    const url = queryString ? `${endPoint}?${queryString}` : endPoint;
+    const url = queryString ? `${endpoint}?${queryString}` : endpoint;
     const contentHash = crypto
       .createHash('sha256')
       .update(JSON.stringify(body))
@@ -87,7 +87,7 @@ export class TuyaApiService {
   private async getToken(appKey: string, secretKey: string): Promise<string> {
     const method = 'GET';
     const timestamp = Date.now().toString();
-    const endPoint = '/v1.0/token?grant_type=1';
+    const endpoint = '/v1.0/token?grant_type=1';
     const contentHash = crypto
       .createHash('sha256')
       .update('')
@@ -96,12 +96,12 @@ export class TuyaApiService {
       method,
       contentHash,
       '',
-      endPoint,
+      endpoint,
     ].join('\n');
     const signString = appKey + timestamp + stringToSign;
 
     const { data } = await this.httpService.axiosRef.get(
-      `${this.baseUrl}/${endPoint}`,
+      `${this.baseUrl}/${endpoint}`,
       {
         headers: {
           t: timestamp,
