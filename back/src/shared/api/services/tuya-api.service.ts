@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 import * as qs from 'qs';
 
@@ -9,9 +10,10 @@ type QueryParam = string | number | boolean;
 @Injectable()
 export class TuyaApiService {
   private logger = new Logger(TuyaApiService.name);
-  private readonly baseUrl: string = 'https://openapi.tuyaeu.com';
+  private baseUrl: string = this.configService.get('TUYA_API');
 
   constructor(
+    private configService: ConfigService,
     private httpService: HttpService,
   ) { }
 

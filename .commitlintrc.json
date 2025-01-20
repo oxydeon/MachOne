@@ -18,6 +18,15 @@
         "merge"
       ]
     ],
+    "subject-case": [
+      2,
+      "always",
+      [
+        "lower-case",
+        "camel-case",
+        "pascal-case"
+      ]
+    ],
     "scope-empty": [
       2,
       "never"
