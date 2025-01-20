@@ -3,10 +3,10 @@
 >
   @for (device of devices; track $index) {
     @switch (device.category) {
-      @case (deviceValues.type.LIGHT) {
+      @case (deviceTypes.type.LIGHT) {
         <app-device-light [device]="device"></app-device-light>
       }
-      @case (deviceValues.type.VALVE) {
+      @case (deviceTypes.type.VALVE) {
         <app-device-valve [device]="device"></app-device-valve>
       }
       @default {

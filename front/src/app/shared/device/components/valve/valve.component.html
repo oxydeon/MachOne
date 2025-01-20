@@ -1,7 +1,7 @@
 <div
   class="device p-5"
-  [class.valve-auto]="getValveMode(device) === deviceValues.valve.mode.AUTO"
-  [class.valve-on]="getValveState(device) === deviceValues.valve.state.OPEN"
+  [class.valve-auto]="getValveMode(device) === deviceValues.mode.AUTO"
+  [class.valve-on]="getValveState(device) === deviceValues.state.OPEN"
   [class.offline]="!device.online"
 >
   <h2 class="font-semibold uppercase text-sm">
@@ -17,13 +17,11 @@
 
       <div
         class="set-degree"
-        [class.invisible]="getValveMode(device) === deviceValues.valve.mode.OFF"
+        [class.invisible]="getValveMode(device) === deviceValues.mode.OFF"
       >
         <button
           class="w-8 h-8"
-          [class.invisible]="
-            getTemperatureSet(device) <= deviceValues.valve.temp.min
-          "
+          [class.invisible]="getTemperatureSet(device) <= deviceValues.temp.min"
           (click)="setTemperature(device, -1)"
         >
           -
@@ -31,9 +29,7 @@
         {{ getTemperatureSet(device) }}
         <button
           class="w-8 h-8"
-          [class.invisible]="
-            getTemperatureSet(device) >= deviceValues.valve.temp.max
-          "
+          [class.invisible]="getTemperatureSet(device) >= deviceValues.temp.max"
           (click)="setTemperature(device, 1)"
         >
           +
@@ -47,31 +43,31 @@
       @if (!device.online) {
         <span class="material-icons text-xl/[24px]">cloud_off</span>
       }
-      @if (getValveState(device) === deviceValues.valve.state.OPEN) {
+      @if (getValveState(device) === deviceValues.state.OPEN) {
         <span class="material-icons text-xl/[24px]">
           local_fire_department
         </span>
       }
-      @if (getValveMode(device) === deviceValues.valve.mode.OFF) {
+      @if (getValveMode(device) === deviceValues.mode.OFF) {
         <span
           class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+          (click)="setMode(device, deviceValues.mode.AUTO)"
         >
           power_settings_new
         </span>
       }
-      @if (getValveMode(device) === deviceValues.valve.mode.AUTO) {
+      @if (getValveMode(device) === deviceValues.mode.AUTO) {
         <span
           class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.valve.mode.MANUAL)"
+          (click)="setMode(device, deviceValues.mode.MANUAL)"
         >
           schedule
         </span>
       }
-      @if (getValveMode(device) === deviceValues.valve.mode.MANUAL) {
+      @if (getValveMode(device) === deviceValues.mode.MANUAL) {
         <span
           class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.valve.mode.AUTO)"
+          (click)="setMode(device, deviceValues.mode.AUTO)"
         >
           device_thermostat
         </span>

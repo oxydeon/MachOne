@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { catchError } from 'rxjs';
 import { environment } from '../env';
-import { deviceValues } from './config';
+import { deviceTypes } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { DeviceApiService } from './shared/api/services/device-api.service';
@@ -27,7 +27,7 @@ import { DeviceValvetComponent } from './shared/device/components/valve/valve.co
 })
 export class AppComponent implements OnInit {
   baseUrl = window.location.origin;
-  deviceValues = deviceValues;
+  deviceTypes = deviceTypes;
 
   devicesIds: string[] = [];
   devices?: any[];

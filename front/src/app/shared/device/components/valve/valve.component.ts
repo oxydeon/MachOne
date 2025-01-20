@@ -2,8 +2,8 @@
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
-import { deviceValues } from '../../../../config';
 import { DeviceApiService } from '../../../api/services/device-api.service';
+import { deviceValues } from './config';
 
 @Component({
   selector: 'app-device-valve',
