@@ -3,13 +3,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "lint": "eslint --max-warnings 0 {src,cypress}/**/*.{ts,html}",
+    "lint": "eslint --max-warnings 0 src/**/*.{ts,html}",
     "lint:fix": "npm run lint -- --fix",
+    "lint:commit": "eslint --max-warnings 0 --color --fix",
     "build": "ng build"
-  },
-  "lint-staged": {
-    "{src,cypress}/**/*.{ts,html}": "npm run lint:commit",
-    "src/**/*.{css,scss}": "prettier --write"
   },
   "dependencies": {
     "@angular/animations": "~19.1.1",
