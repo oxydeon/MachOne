@@ -1,0 +1,32 @@
+{
+  "name": "mach-one",
+  "version": "1.0.0",
+  "description": "Web app to control Tuya devices",
+  "author": "oxydeon",
+  "keywords": [
+    "Tuya",
+    "Smart life",
+    "Web app"
+  ],
+  "workspaces": [
+    "back",
+    "front"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "commit:message": "commitlint --color --edit",
+    "start:back": "npm start -w back",
+    "start:front": "npm start -w front"
+  },
+  "lint-staged": {
+    "back/src/**/*.{ts,js}": "npm run lint:commit -w back",
+    "front/src/**/*.{ts,html}": "npm run lint:commit -w front",
+    "front/src/**/*.{css,scss}": "npx prettier --write"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "~19.5.0",
+    "@commitlint/config-conventional": "~19.5.0",
+    "lint-staged": "~15.2.10",
+    "husky": "~9.1.7"
+  }
+}

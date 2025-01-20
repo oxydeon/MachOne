@@ -23,16 +23,16 @@ You can create appKey and secretKey on [platform.tuya.com/cloud](https://platfor
 This data is directly sent to Tuya API without being saved.
 Otherwise you can also launch the project easily on your side!
 
-## Install & start
+## Install
 
-### Back (NestJS)
-
-- `cd back`
 - `npm install`
-- `npm start`
 
-### Front (Angular)
+## Start
 
-- `cd front`
-- `npm install`
-- `npm start`
+- Back (NestJS)
+
+  `npm run start:back`
+
+- Front (Angular)
+
+  `npm run start:front`
