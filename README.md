@@ -13,7 +13,7 @@ You need to pass some data as query params:
 
 - appKey=APP_KEY
 - secretKey=SECRET_KEY
-- devices=DEVICE_ID_1,DEVICE_ID_2,... (not possible to retrieve all devices with Tuya API, order will be respect to display)
+- devices=DEVICE_ID_1,DEVICE_ID_2,... (not possible to retrieve all devices with Tuya API, order will be respect to display it)
 
 You can create appKey and secretKey on [platform.tuya.com/cloud](https://platform.tuya.com/cloud)
 
