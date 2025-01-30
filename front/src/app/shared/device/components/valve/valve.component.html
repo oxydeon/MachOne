@@ -42,35 +42,39 @@
     >
       @if (!device.online) {
         <span class="material-icons text-xl/[24px]">cloud_off</span>
-      }
-      @if (getValveState(device) === deviceValues.state.OPEN) {
-        <span class="material-icons text-xl/[24px]">
-          local_fire_department
-        </span>
-      }
-      @if (getValveMode(device) === deviceValues.mode.OFF) {
-        <span
-          class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.mode.AUTO)"
-        >
-          power_settings_new
-        </span>
-      }
-      @if (getValveMode(device) === deviceValues.mode.AUTO) {
-        <span
-          class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.mode.MANUAL)"
-        >
-          schedule
-        </span>
-      }
-      @if (getValveMode(device) === deviceValues.mode.MANUAL) {
-        <span
-          class="material-icons text-xl/[24px] cursor-pointer"
-          (click)="setMode(device, deviceValues.mode.AUTO)"
-        >
-          device_thermostat
-        </span>
+      } @else {
+        @if (getValveState(device) === deviceValues.state.OPEN) {
+          <span class="material-icons text-xl/[24px]">
+            local_fire_department
+          </span>
+        }
+
+        @switch (getValveMode(device)) {
+          @case (deviceValues.mode.OFF) {
+            <span
+              class="material-icons text-xl/[24px] cursor-pointer"
+              (click)="setMode(device, deviceValues.mode.AUTO)"
+            >
+              power_settings_new
+            </span>
+          }
+          @case (deviceValues.mode.AUTO) {
+            <span
+              class="material-icons text-xl/[24px] cursor-pointer"
+              (click)="setMode(device, deviceValues.mode.MANUAL)"
+            >
+              schedule
+            </span>
+          }
+          @case (deviceValues.mode.MANUAL) {
+            <span
+              class="material-icons text-xl/[24px] cursor-pointer"
+              (click)="setMode(device, deviceValues.mode.AUTO)"
+            >
+              device_thermostat
+            </span>
+          }
+        }
       }
     </div>
   </div>

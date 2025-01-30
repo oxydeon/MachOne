@@ -6,8 +6,8 @@ import { DeviceApiService } from '../../../api/services/device-api.service';
   selector: 'app-device-light',
   templateUrl: './light.component.html',
   styleUrls: [
-    '../device.scss',
     './light.component.scss',
+    '../device.scss',
   ],
   standalone: true,
   providers: [DeviceApiService],

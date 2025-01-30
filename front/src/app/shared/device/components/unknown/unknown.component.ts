@@ -5,8 +5,8 @@ import { Component, Input } from '@angular/core';
   selector: 'app-device-unknown',
   templateUrl: './unknown.component.html',
   styleUrls: [
-    '../device.scss',
     './unknown.component.scss',
+    '../device.scss',
   ],
   standalone: true,
 })

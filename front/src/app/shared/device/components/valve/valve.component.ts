@@ -9,8 +9,8 @@ import { deviceValues } from './config';
   selector: 'app-device-valve',
   templateUrl: './valve.component.html',
   styleUrls: [
-    '../device.scss',
     './valve.component.scss',
+    '../device.scss',
   ],
   standalone: true,
   providers: [DeviceApiService],
@@ -40,33 +40,33 @@ export class DeviceValvetComponent {
   }
 
   setTemperature(device: any, change: number): void {
-    const newValue = device.status[2].value + (change * 10);
+    const newTemp = device.status[2].value + (change * 10);
 
     this.setValve(
       device,
       [
         {
           code: 'temp_set',
-          value: newValue,
+          value: newTemp,
         },
       ],
       () => {
-        device.status[2].value = newValue;
+        device.status[2].value = newTemp;
       },
     );
   }
 
-  setMode(device: any, mode: string): void {
+  setMode(device: any, newMode: string): void {
     this.setValve(
       device,
       [
         {
           code: 'mode',
-          value: mode,
+          value: newMode,
         },
       ],
       () => {
-        device.status[0].value = mode;
+        device.status[0].value = newMode;
       },
     );
   }
