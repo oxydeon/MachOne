@@ -8,11 +8,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { logger: logLevel });
 
   // API
-  app.enableCors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization',
-  });
+  app.enableCors({ origin: '*' });
   const port = process.env.PORT;
   await app.listen(port);
 

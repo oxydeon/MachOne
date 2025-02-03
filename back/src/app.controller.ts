@@ -46,17 +46,15 @@ export class AppController {
       secretKey: string;
     },
     @Body() body: {
-      commands: {
-        code: string;
-        value: unknown;
-      }[];
-    },
+      code: string;
+      value: unknown;
+    }[],
   ): Promise<void> {
     return this.deviceApiService.setDevice(
       query.appKey,
       query.secretKey,
       deviceId,
-      body.commands,
+      body,
     );
   }
 }

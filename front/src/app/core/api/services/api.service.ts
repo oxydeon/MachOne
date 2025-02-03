@@ -2,8 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../env';
-
-type QueryParam = string | number | boolean;
+import { Body, Query } from '../models/api.model';
 
 @Injectable()
 export class Api {
@@ -25,58 +24,58 @@ export class Api {
 
   get<T>(
     endpoint: string,
-    params?: { [key: string]: QueryParam },
+    query?: Query,
   ): Observable<T> {
     return this.http.get<T>(
       `${environment.apiUrl}${endpoint}`,
-      this.getOptions(params),
+      this.getOptions(query),
     );
   }
 
   post<T>(
     endpoint: string,
-    body?: { [key: string]: unknown },
-    params?: { [key: string]: QueryParam },
+    body?: Body,
+    query?: Query,
   ): Observable<T> {
     return this.http.post<T>(
       `${environment.apiUrl}${endpoint}`,
       body,
-      this.getOptions(params),
+      this.getOptions(query),
     );
   }
 
   patch<T>(
     endpoint: string,
-    body?: { [key: string]: unknown },
-    params?: { [key: string]: QueryParam },
+    body?: Body,
+    query?: Query,
   ): Observable<T> {
     return this.http.patch<T>(
       `${environment.apiUrl}${endpoint}`,
       body,
-      this.getOptions(params),
+      this.getOptions(query),
     );
   }
 
   delete<T>(
     endpoint: string,
-    params?: { [key: string]: QueryParam },
+    query?: Query,
   ): Observable<T> {
     return this.http.delete<T>(
       `${environment.apiUrl}${endpoint}`,
-      this.getOptions(params),
+      this.getOptions(query),
     );
   }
 
   // get headers and params formatted
   private getOptions(
-    queryParams: { [key: string]: QueryParam } = {},
+    query: Query = {},
   ): {
       headers: HttpHeaders;
-      params: { [key: string]: QueryParam };
+      params: Query;
     } {
     // set query params
     const params = {
-      ...queryParams,
+      ...query,
       appKey: this.appKey || '',
       secretKey: this.secretKey || '',
     };

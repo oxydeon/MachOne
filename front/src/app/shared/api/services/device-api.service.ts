@@ -30,7 +30,7 @@ export class DeviceApiService {
   ): Observable<void> {
     return this.api.post<void>(
       `${this.endpoint}/${deviceId}`,
-      { commands },
+      commands,
     );
   }
 }
