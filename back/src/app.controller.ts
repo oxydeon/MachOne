@@ -38,6 +38,29 @@ export class AppController {
     );
   }
 
+  @Get('/:deviceId/logs')
+  async getDeviceLogs(
+    @Param('deviceId') deviceId: string,
+    @Query() query: {
+      appKey: string;
+      secretKey: string;
+      startTime: string;
+      endTime: string;
+      codes?: string;
+    },
+  ): Promise<object> {
+    return this.deviceApiService.getDeviceLogs(
+      query.appKey,
+      query.secretKey,
+      deviceId,
+      {
+        startTime: new Date(query.startTime),
+        endTime: new Date(query.endTime),
+        codes: query.codes?.split(','),
+      },
+    );
+  }
+
   @Post('/:deviceId')
   async setDevice(
     @Param('deviceId') deviceId: string,

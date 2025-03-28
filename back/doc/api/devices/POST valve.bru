@@ -1,7 +1,7 @@
 meta {
   name: POST valve
   type: http
-  seq: 4
+  seq: 5
 }
 
 post {
@@ -16,14 +16,13 @@ params:query {
 }
 
 params:path {
-  id: bfe2846d2a3cf89fbdzlaf
+  id: {{deviceValve}}
 }
 
 body:json {
-  {
-    "commands":[{
+  [{
       "code": "temp_set",
       "value": 200
-    }]
-  }
+  }]
+  
 }

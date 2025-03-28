@@ -61,7 +61,19 @@ export class TuyaApiService {
     const token = await this.getToken(appKey, secretKey);
 
     const timestamp = Date.now().toString();
-    const queryString = decodeURIComponent(qs.stringify(query));
+
+    // query fields must be sorted
+    const sortedQuery = Object.keys(query)
+      .sort()
+      .reduce(
+        (acc, key) => {
+          acc[key] = query[key];
+          return acc;
+        },
+        {},
+      );
+
+    const queryString = decodeURIComponent(qs.stringify(sortedQuery));
     const url = queryString ? `${endpoint}?${queryString}` : endpoint;
     const contentHash = crypto
       .createHash('sha256')

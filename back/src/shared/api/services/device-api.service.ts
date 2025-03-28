@@ -38,6 +38,30 @@ export class DeviceApiService {
     );
   }
 
+  async getDeviceLogs(
+    appKey: string,
+    secretKey: string,
+    deviceId: string,
+    search: {
+      startTime: Date;
+      endTime: Date;
+      codes?: string[];
+    },
+  ): Promise<object> {
+    return this.tuyaApiService.request<any>(
+      appKey,
+      secretKey,
+      'GET',
+      `/v1.0/devices/${deviceId}/logs`,
+      {
+        start_time: search.startTime.getTime(),
+        end_time: search.endTime.getTime(),
+        codes: search.codes?.join(','),
+        type: 7, // data point report
+      },
+    );
+  }
+
   async setDevice(
     appKey: string,
     secretKey: string,

@@ -1,0 +1,23 @@
+meta {
+  name: GET one logs
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api}}/devices/:id/logs?appKey={{appKey}}&secretKey={{secretKey}}&startTime=2025-03-24&endTime=2025-03-30
+  body: none
+  auth: none
+}
+
+params:query {
+  appKey: {{appKey}}
+  secretKey: {{secretKey}}
+  startTime: 2025-03-24
+  endTime: 2025-03-30
+  ~codes: work_state
+}
+
+params:path {
+  id: {{deviceValve}}
+}
