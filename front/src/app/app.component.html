@@ -35,7 +35,8 @@
     </a>
   } @else if (api.hasAuth() && errorMessage) {
     <span class="text-red-500">
-      Error<br />
+      Error
+      <br />
       {{ errorMessage }}</span
     >
   } @else if (api.hasAuth() && !devices) {

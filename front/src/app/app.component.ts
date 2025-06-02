@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   devicesIds: string[] = [];
   devices?: any[];
   errorMessage?: string;
+  errorCount = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,15 +58,22 @@ export class AppComponent implements OnInit {
   }
 
   retrieveDevices(): void {
-    this.deviceApiService.getDevices(this.devicesIds)
-      .pipe(
-        catchError((e: HttpErrorResponse) => {
-          const { error, message } = e.error;
-          this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
-          return [];
-        }),
-      )
+    if (this.errorCount >= environment.retryCount) return;
+
+    this.deviceApiService.getDevices(this.devicesIds).pipe(
+      catchError((e: HttpErrorResponse) => {
+        const { error, message } = e.error;
+        this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
+        this.errorCount += 1;
+
+        return [];
+      }),
+    )
       .subscribe((devices) => {
+        // clear error
+        this.errorMessage = undefined;
+        this.errorCount = 0;
+
         // order devices
         this.devices = devices.sort(
           (a, b) => this.devicesIds.indexOf(a.id) - this.devicesIds.indexOf(b.id),

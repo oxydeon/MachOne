@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { TuyaApiService } from './tuya-api.service';
 
 @Injectable()
 export class DeviceApiService {
+  private logger = new Logger(DeviceApiService.name);
 
   constructor(
     private tuyaApiService: TuyaApiService,
@@ -14,6 +15,8 @@ export class DeviceApiService {
     secretKey: string,
     devices: string[],
   ): Promise<object> {
+    this.logger.debug(`AppKey ***${appKey.slice(-4)} get ${devices.length} devices`);
+
     const result = await this.tuyaApiService.request<any>(
       appKey,
       secretKey,
