@@ -1,12 +1,12 @@
 meta {
-  name: POST light
+  name: GET /:id
   type: http
-  seq: 4
+  seq: 2
 }
 
-post {
+get {
   url: {{api}}/devices/:id?appKey={{appKey}}&secretKey={{secretKey}}
-  body: json
+  body: none
   auth: none
 }
 
@@ -16,13 +16,5 @@ params:query {
 }
 
 params:path {
-  id: {{deviceLight}}
-}
-
-body:json {
-  [{
-      "code": "switch_1",
-      "value": false
-  }]
-  
+  id: {{deviceValve}}
 }

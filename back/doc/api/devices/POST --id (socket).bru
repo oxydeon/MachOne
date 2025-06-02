@@ -1,12 +1,12 @@
 meta {
-  name: GET one
+  name: POST /:id (socket)
   type: http
-  seq: 2
+  seq: 4
 }
 
-get {
+post {
   url: {{api}}/devices/:id?appKey={{appKey}}&secretKey={{secretKey}}
-  body: none
+  body: json
   auth: none
 }
 
@@ -16,5 +16,13 @@ params:query {
 }
 
 params:path {
-  id: {{deviceValve}}
+  id: {{deviceSocket}}
+}
+
+body:json {
+  [{
+      "code": "switch_1",
+      "value": false
+  }]
+  
 }
