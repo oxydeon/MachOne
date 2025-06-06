@@ -24,9 +24,9 @@
     "front/src/**/*.{css,scss}": "npx prettier --write"
   },
   "devDependencies": {
-    "@commitlint/cli": "~19.5.0",
-    "@commitlint/config-conventional": "~19.5.0",
-    "lint-staged": "~15.2.10",
+    "@commitlint/cli": "~19.8.1",
+    "@commitlint/config-conventional": "~19.8.1",
+    "lint-staged": "~15.5.2",
     "husky": "~9.1.7"
   }
 }

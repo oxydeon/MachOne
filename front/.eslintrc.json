@@ -311,9 +311,11 @@
       "files": [
         "*.html"
       ],
+      "plugins": [
+        "prettier"
+      ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "plugin:prettier/recommended"
+        "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
         "@angular-eslint/template/attributes-order": "warn",
