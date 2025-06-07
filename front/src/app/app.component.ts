@@ -6,12 +6,12 @@ import { environment } from '../env';
 import { deviceTypes } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
+import { Device } from './shared/api/models/device.model';
 import { DeviceApiService } from './shared/api/services/device-api.service';
 import { DeviceLightComponent } from './shared/device/components/light/light.component';
 import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
 import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
 import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
-import { Device } from './shared/api/models/device.model';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   deviceTypes = deviceTypes;
 
   devicesIds: string[] = [];
+  lineBreaks: number[] = [];
   devices?: Device[];
   errorMessage?: string;
   errorCount = 0;
@@ -47,11 +48,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // retrieve credentials from query params
-    this.route.queryParams.subscribe(({ appKey, secretKey, devices }) => {
+    this.route.queryParams.subscribe(({ appKey, secretKey, devices, lineBreaks }) => {
       if (!appKey || !secretKey || !devices) return;
 
       this.api.auth(appKey, secretKey);
       this.devicesIds = devices.split(',');
+      this.lineBreaks = lineBreaks ? lineBreaks.split(',').map(Number) : [];
 
       this.retrieveDevices();
 

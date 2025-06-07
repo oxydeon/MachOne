@@ -1,22 +1,29 @@
 <div
-  class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 p-5"
+  class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 p-1"
 >
   @for (device of devices; track $index) {
-    @if (deviceTypes.socket.includes(device.category)) {
-      <app-device-socket [device]="device" />
-    } @else if (deviceTypes.light.includes(device.category)) {
-      <app-device-light [device]="device" />
-    } @else if (deviceTypes.valve.includes(device.category)) {
-      <app-device-valve [device]="device" />
-    } @else {
-      <app-device-unknown [device]="device" />
+    <div class="m-3">
+      @if (deviceTypes.socket.includes(device.category)) {
+        <app-device-socket [device]="device" />
+      } @else if (deviceTypes.light.includes(device.category)) {
+        <app-device-light [device]="device" />
+      } @else if (deviceTypes.valve.includes(device.category)) {
+        <app-device-valve [device]="device" />
+      } @else {
+        <app-device-unknown [device]="device" />
+      }
+    </div>
+
+    @if (lineBreaks.includes($index + 1)) {
+      <span class="col-span-full"></span>
     }
   }
 </div>
 
 <div class="text-center text-gray-500">
   @if (!api.hasAuth()) {
-    You need to provide credentials like this:
+    <p class="text-xl">You need to provide credentials like this:</p>
+
     <br />
     <a
       class="text-center text-gray-500"
@@ -24,19 +31,19 @@
       [queryParams]="{
         appKey: 'APP_KEY',
         secretKey: 'SECRET_KEY',
-        devices: 'DEVICE_ID_1,DEVICE_ID_2,...',
+        devices: 'DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3',
+        lineBreaks: '2',
       }"
     >
       {{
         baseUrl
-      }}?appKey=APP_KEY&secretKey=SECRET_KEY?devices=DEVICE_ID_1,DEVICE_ID_2,...
+      }}?appKey=APP_KEY&secretKey=SECRET_KEY&devices=DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3&lineBreaks=2
     </a>
   } @else if (api.hasAuth() && errorMessage) {
-    <span class="text-red-500">
-      Error
-      <br />
-      {{ errorMessage }}</span
-    >
+    <p class="text-xl text-red-500">Error</p>
+    <p class="text-red-500">
+      {{ errorMessage }}
+    </p>
   } @else if (api.hasAuth() && !devices) {
     Loading...<br />
     (it can take some time if free server needs to wake up)
