@@ -2,7 +2,9 @@
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
+import { Device, StatusCode } from '../../../api/models/device.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
+import { getStatus, getStatusIndex } from '../../utils/device.utils';
 import { deviceValues } from './config';
 
 @Component({
@@ -15,64 +17,66 @@ import { deviceValues } from './config';
   standalone: true,
   providers: [DeviceApiService],
 })
-export class DeviceValvetComponent {
-  @Input() device: any;
+export class DeviceValveComponent {
+  @Input({ required: true }) device!: Device;
   deviceValues = deviceValues;
 
   constructor(
     private deviceApiService: DeviceApiService,
   ) { }
 
-  getValveMode(device: any): string {
-    return device.status?.[0]?.value;
+  getMode(device: Device): string {
+    return getStatus(device, StatusCode.MODE);
   }
 
-  getValveState(device: any): string {
-    return device.status?.[1]?.value;
+  getState(device: Device): string {
+    return getStatus(device, StatusCode.STATE);
   }
 
-  getTemperatureSet(device: any): number {
-    return (device.status?.[2]?.value ?? 0) / 10;
+  getTemperatureSet(device: Device): number {
+    return (getStatus(device, StatusCode.TEMPERATURE_SET) ?? 0) / 10;
   }
 
-  getTemperature(device: any): number {
-    return (device.status?.[3]?.value ?? 0) / 10;
+  getTemperature(device: Device): number {
+    return (getStatus(device, StatusCode.TEMPERATURE) ?? 0) / 10;
   }
 
-  setTemperature(device: any, change: number): void {
-    const newTemp = device.status[2].value + (change * 10);
+  setTemperature(device: Device, change: number): void {
+    const newTemp = (this.getTemperatureSet(device) + change) * 10;
 
     this.setValve(
       device,
       [
         {
-          code: 'temp_set',
+          code: StatusCode.TEMPERATURE_SET,
           value: newTemp,
         },
       ],
       () => {
-        device.status[2].value = newTemp;
+        const index = getStatusIndex(device, StatusCode.TEMPERATURE_SET);
+        if (index !== undefined) device.status[index].value = newTemp;
       },
     );
   }
 
-  setMode(device: any, newMode: string): void {
+  setMode(device: Device, newMode: string): void {
     this.setValve(
       device,
       [
         {
-          code: 'mode',
+          code: StatusCode.MODE,
           value: newMode,
         },
       ],
       () => {
-        device.status[0].value = newMode;
+        const index = getStatusIndex(device, StatusCode.MODE);
+        if (index !== undefined) device.status[index].value = newMode;
       },
     );
   }
 
   private setValve(
-    device: any,
+    device: Device,
     commands: {
       code: string;
       value: unknown;

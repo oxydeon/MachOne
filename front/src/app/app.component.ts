@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -9,28 +8,34 @@ import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { DeviceApiService } from './shared/api/services/device-api.service';
 import { DeviceLightComponent } from './shared/device/components/light/light.component';
+import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
 import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
-import { DeviceValvetComponent } from './shared/device/components/valve/valve.component';
+import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
+import { Device } from './shared/api/models/device.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
+  providers: [
+    Api,
+    DeviceApiService,
+  ],
   imports: [
     CoreModule,
     RouterModule,
     DeviceUnknowComponent,
+    DeviceSocketComponent,
     DeviceLightComponent,
-    DeviceValvetComponent,
+    DeviceValveComponent,
   ],
-  providers: [DeviceApiService],
 })
 export class AppComponent implements OnInit {
   baseUrl = window.location.origin;
   deviceTypes = deviceTypes;
 
   devicesIds: string[] = [];
-  devices?: any[];
+  devices?: Device[];
   errorMessage?: string;
   errorCount = 0;
 
@@ -60,15 +65,16 @@ export class AppComponent implements OnInit {
   retrieveDevices(): void {
     if (this.errorCount >= environment.retryCount) return;
 
-    this.deviceApiService.getDevices(this.devicesIds).pipe(
-      catchError((e: HttpErrorResponse) => {
-        const { error, message } = e.error;
-        this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
-        this.errorCount += 1;
+    this.deviceApiService.getDevices(this.devicesIds)
+      .pipe(
+        catchError((e: HttpErrorResponse) => {
+          const { error, message } = e.error;
+          this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
+          this.errorCount += 1;
 
-        return [];
-      }),
-    )
+          return [];
+        }),
+      )
       .subscribe((devices) => {
         // clear error
         this.errorMessage = undefined;

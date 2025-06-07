@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from '../../../core/api/services/api.service';
+import { Device } from '../models/device.model';
 
 @Injectable()
 export class DeviceApiService {
@@ -10,14 +11,14 @@ export class DeviceApiService {
     private api: Api,
   ) { }
 
-  getDevices(devices: string[]): Observable<any[]> {
+  getDevices(devices: string[]): Observable<Device[]> {
     return this.api.get(
       this.endpoint,
       { devices: devices.join(',') },
     );
   }
 
-  getDevice(deviceId: string): Observable<any> {
+  getDevice(deviceId: string): Observable<Device> {
     return this.api.get(`${this.endpoint}/${deviceId}`);
   }
 

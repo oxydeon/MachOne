@@ -5,16 +5,16 @@ import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 
 @Component({
-  selector: 'app-device-light',
-  templateUrl: './light.component.html',
+  selector: 'app-device-socket',
+  templateUrl: './socket.component.html',
   styleUrls: [
-    '../socket/socket.component.scss',
+    './socket.component.scss',
     '../device.scss',
   ],
   standalone: true,
   providers: [DeviceApiService],
 })
-export class DeviceLightComponent {
+export class DeviceSocketComponent {
   @Input({ required: true }) device!: Device;
 
   constructor(
@@ -22,7 +22,7 @@ export class DeviceLightComponent {
   ) { }
 
   getSwitch(device: Device): boolean {
-    return getStatus(device, StatusCode.SWITCH_LIGHT);
+    return getStatus(device, StatusCode.SWITCH);
   }
 
   toggleLight(device: Device): void {
@@ -33,12 +33,12 @@ export class DeviceLightComponent {
       device.id,
       [
         {
-          code: StatusCode.SWITCH_LIGHT,
+          code: StatusCode.SWITCH,
           value: newValue,
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(device, StatusCode.SWITCH_LIGHT);
+      const index = getStatusIndex(device, StatusCode.SWITCH);
       if (index !== undefined) device.status[index].value = newValue;
     });
   }

@@ -1,7 +1,7 @@
 <div
   class="device p-5"
-  [class.valve-auto]="getValveMode(device) === deviceValues.mode.AUTO"
-  [class.valve-on]="getValveState(device) === deviceValues.state.OPEN"
+  [class.valve-auto]="getMode(device) === deviceValues.mode.AUTO"
+  [class.valve-on]="getState(device) === deviceValues.state.OPEN"
   [class.offline]="!device.online"
 >
   <h2 class="font-semibold uppercase text-sm">
@@ -17,10 +17,10 @@
 
       <div
         class="set-degree"
-        [class.invisible]="getValveMode(device) === deviceValues.mode.OFF"
+        [class.invisible]="getMode(device) === deviceValues.mode.OFF"
       >
         <button
-          class="w-8 h-8"
+          class="w-8 h-8 cursor-pointer"
           [class.invisible]="getTemperatureSet(device) <= deviceValues.temp.min"
           (click)="setTemperature(device, -1)"
         >
@@ -28,7 +28,7 @@
         </button>
         {{ getTemperatureSet(device) }}
         <button
-          class="w-8 h-8"
+          class="w-8 h-8 cursor-pointer"
           [class.invisible]="getTemperatureSet(device) >= deviceValues.temp.max"
           (click)="setTemperature(device, 1)"
         >
@@ -41,11 +41,11 @@
       @if (!device.online) {
         <span class="material-icons">cloud_off</span>
       } @else {
-        @if (getValveState(device) === deviceValues.state.OPEN) {
+        @if (getState(device) === deviceValues.state.OPEN) {
           <span class="material-icons">local_fire_department</span>
         }
 
-        @switch (getValveMode(device)) {
+        @switch (getMode(device)) {
           @case (deviceValues.mode.OFF) {
             <span
               class="material-icons cursor-pointer"

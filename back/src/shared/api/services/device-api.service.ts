@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable, Logger } from '@nestjs/common';
+import { Device } from '../models/device.model';
 import { TuyaApiService } from './tuya-api.service';
 
 @Injectable()
@@ -14,7 +16,7 @@ export class DeviceApiService {
     appKey: string,
     secretKey: string,
     devices: string[],
-  ): Promise<object> {
+  ): Promise<Device[]> {
     this.logger.debug(`AppKey ***${appKey.slice(-4)} get ${devices.length} devices`);
 
     const result = await this.tuyaApiService.request<any>(
@@ -32,8 +34,8 @@ export class DeviceApiService {
     appKey: string,
     secretKey: string,
     deviceId: string,
-  ): Promise<object> {
-    return this.tuyaApiService.request<any>(
+  ): Promise<Device> {
+    return this.tuyaApiService.request(
       appKey,
       secretKey,
       'GET',
@@ -51,7 +53,7 @@ export class DeviceApiService {
       codes?: string[];
     },
   ): Promise<object> {
-    return this.tuyaApiService.request<any>(
+    return this.tuyaApiService.request(
       appKey,
       secretKey,
       'GET',

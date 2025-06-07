@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
+import { Device } from '../../../api/models/device.model';
 
 @Component({
   selector: 'app-device-unknown',
@@ -11,5 +12,5 @@ import { Component, Input } from '@angular/core';
   standalone: true,
 })
 export class DeviceUnknowComponent {
-  @Input() device: any;
+  @Input({ required: true }) device!: Device;
 }

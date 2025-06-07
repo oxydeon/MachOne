@@ -2,16 +2,14 @@
   class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 p-5"
 >
   @for (device of devices; track $index) {
-    @switch (device.category) {
-      @case (deviceTypes.type.LIGHT) {
-        <app-device-light [device]="device"></app-device-light>
-      }
-      @case (deviceTypes.type.VALVE) {
-        <app-device-valve [device]="device"></app-device-valve>
-      }
-      @default {
-        <app-device-unknown [device]="device"></app-device-unknown>
-      }
+    @if (deviceTypes.socket.includes(device.category)) {
+      <app-device-socket [device]="device" />
+    } @else if (deviceTypes.light.includes(device.category)) {
+      <app-device-light [device]="device" />
+    } @else if (deviceTypes.valve.includes(device.category)) {
+      <app-device-valve [device]="device" />
+    } @else {
+      <app-device-unknown [device]="device" />
     }
   }
 </div>
