@@ -10,10 +10,10 @@
 
   <div class="flex relative">
     <div
-      class="text-sm space-y-1 w-5/6"
+      class="text-sm w-5/6"
       [class.invisible]="!device.online"
     >
-      <div class="degree my-5">{{ getTemperature(device) }}°</div>
+      <div class="degree text-center">{{ getTemperature(device) }}°</div>
 
       <div
         class="set-degree"
@@ -37,22 +37,18 @@
       </div>
     </div>
 
-    <div
-      class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0.5 w-6/6"
-    >
+    <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
       @if (!device.online) {
-        <span class="material-icons text-xl/[24px]">cloud_off</span>
+        <span class="material-icons">cloud_off</span>
       } @else {
         @if (getValveState(device) === deviceValues.state.OPEN) {
-          <span class="material-icons text-xl/[24px]">
-            local_fire_department
-          </span>
+          <span class="material-icons">local_fire_department</span>
         }
 
         @switch (getValveMode(device)) {
           @case (deviceValues.mode.OFF) {
             <span
-              class="material-icons text-xl/[24px] cursor-pointer"
+              class="material-icons cursor-pointer"
               (click)="setMode(device, deviceValues.mode.AUTO)"
             >
               power_settings_new
@@ -60,7 +56,7 @@
           }
           @case (deviceValues.mode.AUTO) {
             <span
-              class="material-icons text-xl/[24px] cursor-pointer"
+              class="material-icons cursor-pointer"
               (click)="setMode(device, deviceValues.mode.MANUAL)"
             >
               schedule
@@ -68,7 +64,7 @@
           }
           @case (deviceValues.mode.MANUAL) {
             <span
-              class="material-icons text-xl/[24px] cursor-pointer"
+              class="material-icons cursor-pointer"
               (click)="setMode(device, deviceValues.mode.AUTO)"
             >
               device_thermostat

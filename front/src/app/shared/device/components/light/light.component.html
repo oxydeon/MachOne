@@ -10,24 +10,17 @@
 
   <div class="flex relative">
     <div
-      class="text-sm space-y-1 w-5/6"
+      class="text-sm w-5/6"
       [class.invisible]="!device.online"
     >
       <div class="my-2">&nbsp;</div>
     </div>
 
-    <div
-      class="flex flex-col justify-end space-y-2 absolute right-0 bottom-0 w-6/6"
-    >
+    <div class="flex flex-col space-y-3 absolute right-0 bottom-0">
       @if (!device.online) {
-        <span class="material-icons text-xl/[24px]">cloud_off</span>
+        <span class="material-icons">cloud_off</span>
       }
-      <span
-        class="material-icons text-xl/[24px] cursor-pointer"
-        [class.text-gray-500]="!getLightStatus(device)"
-      >
-        lightbulb
-      </span>
+      <span class="material-icons cursor-pointer">lightbulb</span>
     </div>
   </div>
 </div>
