@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// TODO: Use this only as a base interface, create more specific interfaces for different device types
 export interface Device {
   id: string;
   name: string;
   category: string;
   online: boolean;
   status: {
-    code: StatusCode;
+    code: StatusCode | string;
     value: any;
   }[];
 }

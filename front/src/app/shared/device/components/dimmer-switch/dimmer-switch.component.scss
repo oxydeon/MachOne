@@ -1,0 +1,14 @@
+.turned-on {
+  background: linear-gradient(160deg, #ffb12c 0%, #aa6d00 100%);
+}
+
+.disabled {
+  opacity: 0.15;
+}
+
+.range-input {
+  cursor: pointer;
+  &:active {
+    cursor: grab;
+  }
+}

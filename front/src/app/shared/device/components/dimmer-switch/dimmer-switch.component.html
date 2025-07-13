@@ -1,0 +1,58 @@
+<div
+  class="device cursor-pointer p-5"
+  [class.offline]="!device.online"
+>
+  <h2 class="font-semibold uppercase text-sm">
+    {{ device.name }}
+  </h2>
+
+  <div class="flex relative">
+    <div class="text-sm w-5/6">
+      @for (
+        dimmerSwitch of [
+          Switches.SWITCH_1,
+          Switches.SWITCH_2,
+          Switches.SWITCH_3,
+        ];
+        track dimmerSwitch.statusCode
+      ) {
+        @if (switchState(dimmerSwitch) | isNotNullish) {
+          <div class="flex items-center space-x-4 mt-2">
+            <input
+              #ref
+              type="range"
+              min="10"
+              max="1000"
+              class="w-full range-input"
+              [class.disabled]="!switchState(dimmerSwitch)"
+              [disabled]="!switchState(dimmerSwitch)"
+              [value]="switchBrightness(dimmerSwitch)"
+              (change)="changeBrightness(dimmerSwitch, ref.valueAsNumber)"
+            />
+
+            <div class="flex items-center gap-2">
+              <button
+                class="w-8 h-8 cursor-pointer border rounded-lg flex items-center justify-center"
+                [class.turned-on]="switchState(dimmerSwitch)"
+                (click)="toggleLight(dimmerSwitch)"
+              >
+                <span class="material-icons"> adjust </span>
+              </button>
+            </div>
+          </div>
+        }
+      }
+      <!-- Add a bit of space if there's only one switch -->
+      @if (!(switchState(Switches.SWITCH_2) | isNotNullish)) {
+        <div class="flex items-center space-x-4 mt-2">&nbsp;</div>
+      }
+    </div>
+
+    <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
+      @if (!device.online) {
+        <span class="material-icons">cloud_off</span>
+      }
+      <span class="material-icons cursor-pointer">lightbulb</span>
+    </div>
+  </div>
+</div>

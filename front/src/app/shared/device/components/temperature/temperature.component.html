@@ -1,0 +1,48 @@
+<div
+  class="device p-5"
+  [class.offline]="!device.online"
+>
+  <div class="flex items-center justify-between mb-2">
+    <h2 class="font-semibold uppercase text-sm">
+      {{ device.name }}
+    </h2>
+    <div class="battery-status text-left">
+      @switch (batteryState) {
+        @case (TemperatureDeviceBatteryState.LOW) {
+          <span class="material-icons"> battery_2_bar </span>
+        }
+        @case (TemperatureDeviceBatteryState.MIDDLE) {
+          <span class="material-icons"> battery_4_bar </span>
+        }
+        @case (TemperatureDeviceBatteryState.HIGH) {
+          <span class="material-icons"> battery_std </span>
+          High
+        }
+      }
+    </div>
+  </div>
+
+  <div class="flex relative w-full">
+    <div
+      class="text-sm w-full"
+      [class.invisible]="!device.online"
+    >
+      <div class="temperature text-left">
+        <span class="material-icons"> thermostat </span>
+        {{ temperature / 10 }} °{{ tempUnitConvert.toUpperCase() }}
+      </div>
+      <div class="humidity flex items-center justify-between">
+        <div>
+          <span class="material-icons"> water_drop </span>
+          {{ humidity }}%
+        </div>
+        <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
+          @if (!device.online) {
+            <span class="material-icons">cloud_off</span>
+          }
+          <span class="material-icons cursor-pointer">thermostat</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
