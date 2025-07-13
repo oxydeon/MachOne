@@ -12,6 +12,10 @@ import { DeviceLightComponent } from './shared/device/components/light/light.com
 import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
 import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
 import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
+import { DeviceTemperatureComponent } from './shared/device/components/temperature/temperature.component';
+import { AsTemperatureDevicePipe } from './shared/pipes/as-temperature-device.pipe';
+import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-switch/dimmer-switch.component';
+import { AsDimmerSwitchDevicePipe } from './shared/pipes/as-dimmer-switch-device.pipe';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +32,10 @@ import { DeviceValveComponent } from './shared/device/components/valve/valve.com
     DeviceSocketComponent,
     DeviceLightComponent,
     DeviceValveComponent,
+    DeviceTemperatureComponent,
+    AsTemperatureDevicePipe,
+    DeviceDimmerSwitchComponent,
+    AsDimmerSwitchDevicePipe,
   ],
 })
 export class AppComponent implements OnInit {

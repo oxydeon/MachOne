@@ -1,4 +1,7 @@
-<div class="device p-5">
+<div
+  class="device p-5"
+  [class.offline]="!device.online"
+>
   <h2 class="font-semibold uppercase text-sm">
     {{ device.name }}
   </h2>
