@@ -9,6 +9,10 @@
         <app-device-light [device]="device" />
       } @else if (deviceTypes.valve.includes(device.category)) {
         <app-device-valve [device]="device" />
+      } @else if (deviceTypes.temperature.includes(device.category)) {
+        <app-device-temperature [device]="device | asTemperatureDevice" />
+      } @else if (deviceTypes.dimmerSwitch.includes(device.category)) {
+        <app-device-dimmer-switch [device]="device | asDimmerSwitchDevice" />
       } @else {
         <app-device-unknown [device]="device" />
       }
