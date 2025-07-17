@@ -3,4 +3,5 @@ export const environment = {
   refreshDelay: 60,
   waitingDelay: 10,
   retryCount: 4,
+  mock: false,
 };

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../env';
 import { Body, Query } from '../models/api.model';
+import { Mock } from './mock.service';
 
 @Injectable()
 export class Api {
@@ -11,6 +12,7 @@ export class Api {
 
   constructor(
     private http: HttpClient,
+    private mock: Mock,
   ) { }
 
   hasAuth(): boolean {
@@ -26,6 +28,10 @@ export class Api {
     endpoint: string,
     query?: Query,
   ): Observable<T> {
+    if (this.mock.hasMock('get', endpoint)) {
+      return this.mock.getMock('get', endpoint);
+    }
+
     return this.http.get<T>(
       `${environment.apiUrl}${endpoint}`,
       this.getOptions(query),
@@ -37,6 +43,10 @@ export class Api {
     body?: Body,
     query?: Query,
   ): Observable<T> {
+    if (this.mock.hasMock('post', endpoint)) {
+      return this.mock.getMock('post', endpoint);
+    }
+
     return this.http.post<T>(
       `${environment.apiUrl}${endpoint}`,
       body,
@@ -49,6 +59,10 @@ export class Api {
     body?: Body,
     query?: Query,
   ): Observable<T> {
+    if (this.mock.hasMock('patch', endpoint)) {
+      return this.mock.getMock('patch', endpoint);
+    }
+
     return this.http.patch<T>(
       `${environment.apiUrl}${endpoint}`,
       body,
@@ -60,6 +74,10 @@ export class Api {
     endpoint: string,
     query?: Query,
   ): Observable<T> {
+    if (this.mock.hasMock('delete', endpoint)) {
+      return this.mock.getMock('delete', endpoint);
+    }
+
     return this.http.delete<T>(
       `${environment.apiUrl}${endpoint}`,
       this.getOptions(query),
