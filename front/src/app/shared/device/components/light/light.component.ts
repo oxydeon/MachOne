@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
-import { Device, StatusCode } from '../../../api/models/device.model';
+import { Device } from '../../../api/models/device.model';
+import { LightDevice, LightStatusCode } from '../../../api/models/light.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 
@@ -15,14 +16,14 @@ import { getStatus, getStatusIndex } from '../../utils/device.utils';
   providers: [DeviceApiService],
 })
 export class DeviceLightComponent {
-  @Input({ required: true }) device!: Device;
+  @Input({ required: true }) device!: LightDevice;
 
   constructor(
     private deviceApiService: DeviceApiService,
   ) { }
 
   getSwitch(device: Device): boolean {
-    return getStatus(device, StatusCode.SWITCH_LIGHT);
+    return getStatus(device, LightStatusCode.SWITCH);
   }
 
   toggleLight(device: Device): void {
@@ -33,12 +34,12 @@ export class DeviceLightComponent {
       device.id,
       [
         {
-          code: StatusCode.SWITCH_LIGHT,
+          code: LightStatusCode.SWITCH,
           value: newValue,
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(device, StatusCode.SWITCH_LIGHT);
+      const index = getStatusIndex(device, LightStatusCode.SWITCH);
       if (index !== undefined) device.status[index].value = newValue;
     });
   }
