@@ -10,13 +10,13 @@ import { Device } from './shared/api/models/device.model';
 import { DimmerSwitchDevice } from './shared/api/models/dimmer-switch.model';
 import { LightDevice } from './shared/api/models/light.model';
 import { SocketDevice } from './shared/api/models/socket.model';
-import { TemperatureDevice } from './shared/api/models/temperature.model';
+import { ThermometerDevice } from './shared/api/models/thermometer.model';
 import { ValveDevice } from './shared/api/models/valve.model';
 import { DeviceApiService } from './shared/api/services/device-api.service';
 import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-switch/dimmer-switch.component';
 import { DeviceLightComponent } from './shared/device/components/light/light.component';
 import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
-import { DeviceTemperatureComponent } from './shared/device/components/temperature/temperature.component';
+import { DeviceThermometerComponent } from './shared/device/components/thermometer/thermometer.component';
 import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
 import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
 
@@ -35,7 +35,7 @@ import { DeviceValveComponent } from './shared/device/components/valve/valve.com
     DeviceSocketComponent,
     DeviceLightComponent,
     DeviceValveComponent,
-    DeviceTemperatureComponent,
+    DeviceThermometerComponent,
     DeviceDimmerSwitchComponent,
   ],
 })
@@ -110,8 +110,8 @@ export class AppComponent implements OnInit {
     return this.deviceTypes.valve.includes(device.category);
   }
 
-  isTemperatureDevice(device: Device): device is TemperatureDevice {
-    return this.deviceTypes.temperature.includes(device.category);
+  isThermometerDevice(device: Device): device is ThermometerDevice {
+    return this.deviceTypes.thermometer.includes(device.category);
   }
 
   isDimmerSwitchDevice(device: Device): device is DimmerSwitchDevice {

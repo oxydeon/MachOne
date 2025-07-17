@@ -27,13 +27,13 @@
         <span class="material-icons">cloud_off</span>
       } @else {
         @switch (batteryState) {
-          @case (temperatureBatteryState.LOW) {
+          @case (thermometerBatteryState.LOW) {
             <span class="material-icons text-red-400">battery_1_bar</span>
           }
-          @case (temperatureBatteryState.MIDDLE) {
+          @case (thermometerBatteryState.MIDDLE) {
             <span class="material-icons">battery_4_bar</span>
           }
-          @case (temperatureBatteryState.HIGH) {
+          @case (thermometerBatteryState.HIGH) {
             <span class="material-icons">battery_std</span>
             High
           }
