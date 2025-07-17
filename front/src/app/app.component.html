@@ -9,8 +9,8 @@
         <app-device-light [device]="device" />
       } @else if (isValveDevice(device)) {
         <app-device-valve [device]="device" />
-      } @else if (isTemperatureDevice(device)) {
-        <app-device-temperature [device]="device" />
+      } @else if (isThermometerDevice(device)) {
+        <app-device-thermometer [device]="device" />
       } @else if (isDimmerSwitchDevice(device)) {
         <app-device-dimmer-switch [device]="device" />
       } @else {

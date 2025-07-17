@@ -11,7 +11,7 @@ export const deviceTypes = {
   valve: [
     'wkf', // thermostatic valve
   ],
-  temperature: [
+  thermometer: [
     'wsdcg', // temperature and humidity sensor
   ],
   dimmerSwitch: [
