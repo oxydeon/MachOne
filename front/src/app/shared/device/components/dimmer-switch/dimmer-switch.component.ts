@@ -27,12 +27,6 @@ export class DeviceDimmerSwitchComponent {
     return getStatus(this.device, this.switches[switchIndex][statusCode]);
   }
 
-  hasOnlyOneSwitch(): boolean {
-    return this.device.online
-      && !!this.getStatus(0, 'status')
-      && !this.getStatus(1, 'status');
-  }
-
   getBrightnessPercentage(switchIndex: number): number {
     return this.getStatus<number>(switchIndex, 'brightness')
       / this.getStatus<number>(switchIndex, 'brightnessMax');
@@ -73,5 +67,14 @@ export class DeviceDimmerSwitchComponent {
       const index = getStatusIndex(this.device, statusCode);
       if (index !== undefined) this.device.status[index].value = brightnessValue;
     });
+  }
+
+  displayBrightnessBackground(): boolean {
+    return this.device.online
+      // has only one switch
+      && !!this.getStatus(0, 'brightness')
+      && !this.getStatus(1, 'brightness')
+      // is turned on
+      && !!this.getStatus<boolean>(0, 'status');
   }
 }
