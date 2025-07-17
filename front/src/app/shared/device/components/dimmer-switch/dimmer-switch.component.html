@@ -1,5 +1,14 @@
 <div
   class="device"
+  [style]="{
+    background: hasOnlyOneSwitch()
+      ? `linear-gradient(
+        160deg, 
+        rgba(255, 177, 44, ${brightnessPercentage(switches.SWITCH_1)}) 0%, 
+        rgba(170, 109, 0, ${brightnessPercentage(switches.SWITCH_1)}) 100%
+      )`
+      : '#0b1739',
+  }"
   [class.offline]="!device.online"
 >
   <h2 class="title">
