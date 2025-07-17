@@ -1,19 +1,19 @@
 <div
-  class="device p-5"
+  class="device"
   [class.offline]="!device.online"
 >
-  <h2 class="font-semibold uppercase text-sm">
+  <h2 class="title">
     {{ device.name }}
   </h2>
 
-  <div class="flex relative">
-    <div class="text-sm w-5/6">
+  <div class="container">
+    <div class="content">
       <div class="my-2 text-red-400 uppercase">
         Unsupported device (Type: {{ device.category }})
       </div>
     </div>
 
-    <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
+    <div class="icons">
       @if (!device.online) {
         <span class="material-icons">cloud_off</span>
       }

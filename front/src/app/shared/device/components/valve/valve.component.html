@@ -1,16 +1,16 @@
 <div
-  class="device p-5"
+  class="device"
   [class.valve-auto]="getMode(device) === deviceValues.mode.AUTO"
   [class.valve-on]="getState(device) === deviceValues.state.OPEN"
   [class.offline]="!device.online"
 >
-  <h2 class="font-semibold uppercase text-sm">
+  <h2 class="title">
     {{ device.name }}
   </h2>
 
-  <div class="flex relative">
+  <div class="container">
     <div
-      class="text-sm w-5/6"
+      class="content"
       [class.invisible]="!device.online"
     >
       <div class="degree text-center">{{ getTemperature(device) }}°</div>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
+    <div class="icons">
       @if (!device.online) {
         <span class="material-icons">cloud_off</span>
       } @else {
