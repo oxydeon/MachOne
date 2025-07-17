@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Device } from './shared/api/models/device.model';
 import { DeviceApiService } from './shared/api/services/device-api.service';
 
 @Controller('/devices')
@@ -15,7 +16,7 @@ export class AppController {
       secretKey: string;
       devices: string;
     },
-  ): Promise<object> {
+  ): Promise<Device[]> {
     return this.deviceApiService.getDevices(
       query.appKey,
       query.secretKey,
@@ -30,7 +31,7 @@ export class AppController {
       appKey: string;
       secretKey: string;
     },
-  ): Promise<object> {
+  ): Promise<Device> {
     return this.deviceApiService.getDevice(
       query.appKey,
       query.secretKey,
