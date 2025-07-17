@@ -2,7 +2,8 @@
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
-import { Device, StatusCode } from '../../../api/models/device.model';
+import { Device } from '../../../api/models/device.model';
+import { ValveDevice, ValveStatusCode } from '../../../api/models/valve.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 import { deviceValues } from './config';
@@ -18,7 +19,7 @@ import { deviceValues } from './config';
   providers: [DeviceApiService],
 })
 export class DeviceValveComponent {
-  @Input({ required: true }) device!: Device;
+  @Input({ required: true }) device!: ValveDevice;
   deviceValues = deviceValues;
 
   constructor(
@@ -26,19 +27,19 @@ export class DeviceValveComponent {
   ) { }
 
   getMode(device: Device): string {
-    return getStatus(device, StatusCode.MODE);
+    return getStatus(device, ValveStatusCode.MODE);
   }
 
   getState(device: Device): string {
-    return getStatus(device, StatusCode.STATE);
+    return getStatus(device, ValveStatusCode.STATE);
   }
 
   getTemperatureSet(device: Device): number {
-    return (getStatus(device, StatusCode.TEMPERATURE_SET) ?? 0) / 10;
+    return (getStatus(device, ValveStatusCode.TEMPERATURE_SET) ?? 0) / 10;
   }
 
   getTemperature(device: Device): number {
-    return (getStatus(device, StatusCode.TEMPERATURE) ?? 0) / 10;
+    return (getStatus(device, ValveStatusCode.TEMPERATURE) ?? 0) / 10;
   }
 
   setTemperature(device: Device, change: number): void {
@@ -48,12 +49,12 @@ export class DeviceValveComponent {
       device,
       [
         {
-          code: StatusCode.TEMPERATURE_SET,
+          code: ValveStatusCode.TEMPERATURE_SET,
           value: newTemp,
         },
       ],
       () => {
-        const index = getStatusIndex(device, StatusCode.TEMPERATURE_SET);
+        const index = getStatusIndex(device, ValveStatusCode.TEMPERATURE_SET);
         if (index !== undefined) device.status[index].value = newTemp;
       },
     );
@@ -64,12 +65,12 @@ export class DeviceValveComponent {
       device,
       [
         {
-          code: StatusCode.MODE,
+          code: ValveStatusCode.MODE,
           value: newMode,
         },
       ],
       () => {
-        const index = getStatusIndex(device, StatusCode.MODE);
+        const index = getStatusIndex(device, ValveStatusCode.MODE);
         if (index !== undefined) device.status[index].value = newMode;
       },
     );
