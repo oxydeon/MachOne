@@ -253,6 +253,7 @@
           8
         ],
         "import/prefer-default-export": "off",
+        "grouped-accessor-pairs": "off",
         "max-classes-per-file": "off",
         "max-lines": [
           "warn",

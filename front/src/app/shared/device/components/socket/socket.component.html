@@ -1,8 +1,8 @@
 <div
   class="device cursor-pointer"
-  [class.light-on]="getSwitch(device)"
+  [class.light-on]="switch"
   [class.offline]="!device.online"
-  (click)="toggleLight(device)"
+  (click)="toggleLight()"
 >
   <h2 class="title">
     {{ device.name }}

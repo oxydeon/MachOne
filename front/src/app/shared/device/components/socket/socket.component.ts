@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
-import { Device } from '../../../api/models/device.model';
 import { SocketDevice, SocketStatusCode } from '../../../api/models/socket.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
@@ -22,16 +21,16 @@ export class DeviceSocketComponent {
     private deviceApiService: DeviceApiService,
   ) { }
 
-  getSwitch(device: Device): boolean {
-    return getStatus(device, SocketStatusCode.SWITCH);
+  get switch(): boolean {
+    return getStatus(this.device, SocketStatusCode.SWITCH);
   }
 
-  toggleLight(device: Device): void {
-    if (!device.online) return;
+  toggleLight(): void {
+    if (!this.device.online) return;
 
-    const newValue = !this.getSwitch(device);
+    const newValue = !this.switch;
     this.deviceApiService.setDevice(
-      device.id,
+      this.device.id,
       [
         {
           code: SocketStatusCode.SWITCH,
@@ -39,8 +38,8 @@ export class DeviceSocketComponent {
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(device, SocketStatusCode.SWITCH);
-      if (index !== undefined) device.status[index].value = newValue;
+      const index = getStatusIndex(this.device, SocketStatusCode.SWITCH);
+      if (index !== undefined) this.device.status[index].value = newValue;
     });
   }
 }
