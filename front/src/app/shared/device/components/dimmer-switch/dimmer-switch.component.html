@@ -4,8 +4,8 @@
     background: hasOnlyOneSwitch()
       ? `linear-gradient(
         160deg, 
-        rgba(255, 177, 44, ${brightnessPercentage(switches.SWITCH_1)}) 0%, 
-        rgba(170, 109, 0, ${brightnessPercentage(switches.SWITCH_1)}) 100%
+        rgba(255, 177, 44, ${brightnessPercentage(switches.switch1)}) 0%, 
+        rgba(170, 109, 0, ${brightnessPercentage(switches.switch1)}) 100%
       )`
       : '#0b1739',
   }"
@@ -15,53 +15,44 @@
     {{ device.name }}
   </h2>
 
-  <div class="flex relative">
-    <div class="text-sm w-5/6">
+  <div class="container">
+    <div
+      class="w-6/6"
+      [class.invisible]="!device.online"
+    >
       @for (
-        dimmerSwitch of [
-          Switches.SWITCH_1,
-          Switches.SWITCH_2,
-          Switches.SWITCH_3,
-        ];
+        dimmerSwitch of [switches.switch1, switches.switch2, switches.switch3];
         track dimmerSwitch.statusCode
       ) {
         @if (switchState(dimmerSwitch) | isNotNullish) {
-          <div class="flex items-center space-x-4 mt-2">
+          <div class="flex space-x-1">
             <input
               #ref
               type="range"
               min="10"
               max="1000"
-              class="w-full range-input"
-              [class.disabled]="!switchState(dimmerSwitch)"
+              class="w-full"
               [disabled]="!switchState(dimmerSwitch)"
               [value]="switchBrightness(dimmerSwitch)"
               (change)="changeBrightness(dimmerSwitch, ref.valueAsNumber)"
             />
 
-            <div class="flex items-center gap-2">
-              <button
-                class="w-8 h-8 cursor-pointer border rounded-lg flex items-center justify-center"
-                [class.turned-on]="switchState(dimmerSwitch)"
-                (click)="toggleLight(dimmerSwitch)"
-              >
-                <span class="material-icons"> adjust </span>
-              </button>
-            </div>
+            <button
+              class="cursor-pointer pt-2 pl-2"
+              [class.turned-off]="!switchState(dimmerSwitch)"
+              (click)="toggleLight(dimmerSwitch)"
+            >
+              <span class="material-icons">lightbulb</span>
+            </button>
           </div>
         }
       }
-      <!-- Add a bit of space if there's only one switch -->
-      @if (!(switchState(Switches.SWITCH_2) | isNotNullish)) {
-        <div class="flex items-center space-x-4 mt-2">&nbsp;</div>
-      }
     </div>
 
-    <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
-      @if (!device.online) {
+    @if (!device.online) {
+      <div class="icons">
         <span class="material-icons">cloud_off</span>
-      }
-      <span class="material-icons cursor-pointer">lightbulb</span>
-    </div>
+      </div>
+    }
   </div>
 </div>

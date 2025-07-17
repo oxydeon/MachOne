@@ -10,18 +10,18 @@ interface Switch {
   brightnessMax: DimmerSwitchStatusCode;
 }
 
-const switches: Record<'SWITCH_1' | 'SWITCH_2' | 'SWITCH_3', Switch> = {
-  SWITCH_1: {
+const switches: Record<'switch1' | 'switch2' | 'switch3', Switch> = {
+  switch1: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_1,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_1,
     brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_1,
   },
-  SWITCH_2: {
+  switch2: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_2,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_2,
     brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_2,
   },
-  SWITCH_3: {
+  switch3: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_3,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_3,
     brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_3,
@@ -49,8 +49,8 @@ export class DeviceDimmerSwitchComponent {
 
   hasOnlyOneSwitch(): boolean {
     return this.device.online
-      && this.switchState(switches.SWITCH_1)
-      && !this.switchState(switches.SWITCH_2);
+      && this.switchState(switches.switch1)
+      && !this.switchState(switches.switch2);
   }
 
   switchState(dimmerSwitch: Switch): boolean {
