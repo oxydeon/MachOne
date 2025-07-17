@@ -4,8 +4,8 @@
     background: hasOnlyOneSwitch()
       ? `linear-gradient(
         160deg, 
-        rgba(255, 177, 44, ${brightnessPercentage(switches.switch1)}) 0%, 
-        rgba(170, 109, 0, ${brightnessPercentage(switches.switch1)}) 100%
+        rgba(255, 177, 44, ${getBrightnessPercentage(0)}) 0%, 
+        rgba(170, 109, 0, ${getBrightnessPercentage(0)}) 100%
       )`
       : '#0b1739',
   }"
@@ -21,26 +21,27 @@
       [class.invisible]="!device.online"
     >
       @for (
-        dimmerSwitch of [switches.switch1, switches.switch2, switches.switch3];
-        track dimmerSwitch.statusCode
+        dimmerSwitch of switches;
+        track dimmerSwitch.status;
+        let index = $index
       ) {
-        @if (switchState(dimmerSwitch) | isNotNullish) {
+        @if (getStatus(index, "status") | isNotNullish) {
           <div class="flex space-x-1">
             <input
               #ref
               type="range"
-              min="10"
-              max="1000"
               class="w-full"
-              [disabled]="!switchState(dimmerSwitch)"
-              [value]="switchBrightness(dimmerSwitch)"
-              (change)="changeBrightness(dimmerSwitch, ref.valueAsNumber)"
+              [min]="getStatus(index, 'brightnessMin')"
+              [max]="getStatus(index, 'brightnessMax')"
+              [disabled]="!getStatus(index, 'status')"
+              [value]="getStatus(index, 'brightness')"
+              (change)="setBrightness(index, ref.valueAsNumber)"
             />
 
             <button
               class="cursor-pointer pt-2 pl-2"
-              [class.turned-off]="!switchState(dimmerSwitch)"
-              (click)="toggleLight(dimmerSwitch)"
+              [class.turned-off]="!getStatus(index, 'status')"
+              (click)="toggleLight(index)"
             >
               <span class="material-icons">lightbulb</span>
             </button>

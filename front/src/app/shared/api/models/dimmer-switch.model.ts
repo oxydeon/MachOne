@@ -52,3 +52,32 @@ export enum DimmerSwitchStatusCode {
   RELAY_STATUS = 'relay_status',
   LIGHT_MODE = 'light_mode',
 }
+
+export interface DimmerSwitchItem {
+  status: DimmerSwitchStatusCode;
+  brightness: DimmerSwitchStatusCode;
+  brightnessMin: DimmerSwitchStatusCode;
+  brightnessMax: DimmerSwitchStatusCode;
+}
+
+// Mapping of dimmer switch items to their respective status codes
+export const dimmerSwitchItemStatus: DimmerSwitchItem[] = [
+  {
+    status: DimmerSwitchStatusCode.SWITCH_LED_1,
+    brightness: DimmerSwitchStatusCode.BRIGHT_VALUE_1,
+    brightnessMin: DimmerSwitchStatusCode.BRIGHTNESS_MIN_1,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_1,
+  },
+  {
+    status: DimmerSwitchStatusCode.SWITCH_LED_2,
+    brightness: DimmerSwitchStatusCode.BRIGHT_VALUE_2,
+    brightnessMin: DimmerSwitchStatusCode.BRIGHTNESS_MIN_2,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_2,
+  },
+  {
+    status: DimmerSwitchStatusCode.SWITCH_LED_3,
+    brightness: DimmerSwitchStatusCode.BRIGHT_VALUE_3,
+    brightnessMin: DimmerSwitchStatusCode.BRIGHTNESS_MIN_3,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_3,
+  },
+];
