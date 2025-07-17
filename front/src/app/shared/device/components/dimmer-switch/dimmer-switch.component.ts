@@ -1,32 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IsNotNullishPipe } from '../../../../core/validation/pipes/is-not-nullish.pipe';
-import { DimmerSwitchDevice, DimmerSwitchStatusCode } from '../../../api/models/dimmer-switch.model';
+import { DimmerSwitchDevice, DimmerSwitchItem, dimmerSwitchItemStatus } from '../../../api/models/dimmer-switch.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
-
-interface Switch {
-  statusCode: DimmerSwitchStatusCode;
-  brightnessCode: DimmerSwitchStatusCode;
-  brightnessMax: DimmerSwitchStatusCode;
-}
-
-const switches: Record<'switch1' | 'switch2' | 'switch3', Switch> = {
-  switch1: {
-    statusCode: DimmerSwitchStatusCode.SWITCH_LED_1,
-    brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_1,
-    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_1,
-  },
-  switch2: {
-    statusCode: DimmerSwitchStatusCode.SWITCH_LED_2,
-    brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_2,
-    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_2,
-  },
-  switch3: {
-    statusCode: DimmerSwitchStatusCode.SWITCH_LED_3,
-    brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_3,
-    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_3,
-  },
-};
 
 @Component({
   selector: 'app-device-dimmer-switch',
@@ -41,62 +17,60 @@ const switches: Record<'switch1' | 'switch2' | 'switch3', Switch> = {
 })
 export class DeviceDimmerSwitchComponent {
   @Input({ required: true }) device!: DimmerSwitchDevice;
-  switches = switches;
+  switches = dimmerSwitchItemStatus;
 
   constructor(
     private deviceApiService: DeviceApiService,
   ) { }
 
+  getStatus<T>(switchIndex: number, statusCode: keyof DimmerSwitchItem): T {
+    return getStatus(this.device, this.switches[switchIndex][statusCode]);
+  }
+
   hasOnlyOneSwitch(): boolean {
     return this.device.online
-      && this.switchState(switches.switch1)
-      && !this.switchState(switches.switch2);
+      && !!this.getStatus(0, 'status')
+      && !this.getStatus(1, 'status');
   }
 
-  switchState(dimmerSwitch: Switch): boolean {
-    return getStatus(this.device, dimmerSwitch.statusCode);
+  getBrightnessPercentage(switchIndex: number): number {
+    return this.getStatus<number>(switchIndex, 'brightness')
+      / this.getStatus<number>(switchIndex, 'brightnessMax');
   }
 
-  switchBrightness(dimmerSwitch: Switch): number {
-    return getStatus(this.device, dimmerSwitch.brightnessCode);
-  }
-
-  brightnessPercentage(dimmerSwitch: Switch): number {
-    return getStatus(this.device, dimmerSwitch.brightnessCode)
-      / getStatus(this.device, dimmerSwitch.brightnessMax);
-  }
-
-  toggleLight(dimmerSwitch: Switch): void {
+  toggleLight(switchIndex: number): void {
     if (!this.device.online) return;
 
-    const newValue = !this.switchState(dimmerSwitch);
+    const statusCode = this.switches[switchIndex].status;
+    const newValue = !getStatus(this.device, statusCode);
     this.deviceApiService.setDevice(
       this.device.id,
       [
         {
-          code: dimmerSwitch.statusCode,
+          code: statusCode,
           value: newValue,
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(this.device, dimmerSwitch.statusCode);
+      const index = getStatusIndex(this.device, statusCode);
       if (index !== undefined) this.device.status[index].value = newValue;
     });
   }
 
-  changeBrightness(dimmerSwitch: Switch, brightnessValue: number): void {
+  setBrightness(switchIndex: number, brightnessValue: number): void {
     if (!this.device.online) return;
 
+    const statusCode = this.switches[switchIndex].brightness;
     this.deviceApiService.setDevice(
       this.device.id,
       [
         {
-          code: dimmerSwitch.brightnessCode,
+          code: statusCode,
           value: brightnessValue,
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(this.device, dimmerSwitch.brightnessCode);
+      const index = getStatusIndex(this.device, statusCode);
       if (index !== undefined) this.device.status[index].value = brightnessValue;
     });
   }
