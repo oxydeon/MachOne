@@ -3,16 +3,16 @@
 >
   @for (device of devices; track $index) {
     <div class="m-3">
-      @if (deviceTypes.socket.includes(device.category)) {
+      @if (isSocketDevice(device)) {
         <app-device-socket [device]="device" />
-      } @else if (deviceTypes.light.includes(device.category)) {
+      } @else if (isLightDevice(device)) {
         <app-device-light [device]="device" />
-      } @else if (deviceTypes.valve.includes(device.category)) {
+      } @else if (isValveDevice(device)) {
         <app-device-valve [device]="device" />
-      } @else if (deviceTypes.temperature.includes(device.category)) {
-        <app-device-temperature [device]="device | asTemperatureDevice" />
-      } @else if (deviceTypes.dimmerSwitch.includes(device.category)) {
-        <app-device-dimmer-switch [device]="device | asDimmerSwitchDevice" />
+      } @else if (isTemperatureDevice(device)) {
+        <app-device-temperature [device]="device" />
+      } @else if (isDimmerSwitchDevice(device)) {
+        <app-device-dimmer-switch [device]="device" />
       } @else {
         <app-device-unknown [device]="device" />
       }
