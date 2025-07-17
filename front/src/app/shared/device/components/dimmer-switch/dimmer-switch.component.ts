@@ -1,28 +1,30 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
+import { IsNotNullishPipe } from '../../../../core/validation/pipes/is-not-nullish.pipe';
+import { DimmerSwitchDevice, DimmerSwitchStatusCode } from '../../../api/models/dimmer-switch.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
-import { DimmerSwitchDevice, DimmerSwitchStatusCode } from '../../../api/models/dimmer-switch-device.model';
-import { IsNotNullishPipe } from '../../../pipes/is-not-nullish.pipe';
 
 interface Switch {
   statusCode: DimmerSwitchStatusCode;
   brightnessCode: DimmerSwitchStatusCode;
+  brightnessMax: DimmerSwitchStatusCode;
 }
 
-const Switches: Record<'SWITCH_1' | 'SWITCH_2' | 'SWITCH_3', Switch> = {
+const switches: Record<'SWITCH_1' | 'SWITCH_2' | 'SWITCH_3', Switch> = {
   SWITCH_1: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_1,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_1,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_1,
   },
   SWITCH_2: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_2,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_2,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_2,
   },
   SWITCH_3: {
     statusCode: DimmerSwitchStatusCode.SWITCH_LED_3,
     brightnessCode: DimmerSwitchStatusCode.BRIGHT_VALUE_3,
+    brightnessMax: DimmerSwitchStatusCode.BRIGHTNESS_MAX_3,
   },
 };
 
@@ -39,12 +41,17 @@ const Switches: Record<'SWITCH_1' | 'SWITCH_2' | 'SWITCH_3', Switch> = {
 })
 export class DeviceDimmerSwitchComponent {
   @Input({ required: true }) device!: DimmerSwitchDevice;
-
-  Switches = Switches;
+  switches = switches;
 
   constructor(
     private deviceApiService: DeviceApiService,
   ) { }
+
+  hasOnlyOneSwitch(): boolean {
+    return this.device.online
+      && this.switchState(switches.SWITCH_1)
+      && !this.switchState(switches.SWITCH_2);
+  }
 
   switchState(dimmerSwitch: Switch): boolean {
     return getStatus(this.device, dimmerSwitch.statusCode);
@@ -52,6 +59,11 @@ export class DeviceDimmerSwitchComponent {
 
   switchBrightness(dimmerSwitch: Switch): number {
     return getStatus(this.device, dimmerSwitch.brightnessCode);
+  }
+
+  brightnessPercentage(dimmerSwitch: Switch): number {
+    return getStatus(this.device, dimmerSwitch.brightnessCode)
+      / getStatus(this.device, dimmerSwitch.brightnessMax);
   }
 
   toggleLight(dimmerSwitch: Switch): void {
@@ -88,5 +100,4 @@ export class DeviceDimmerSwitchComponent {
       if (index !== undefined) this.device.status[index].value = brightnessValue;
     });
   }
-
 }
