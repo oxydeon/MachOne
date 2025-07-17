@@ -1,13 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
-import { Device } from '../../../api/models/device.model';
 import { LightDevice, LightStatusCode } from '../../../api/models/light.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 
 @Component({
   selector: 'app-device-light',
-  templateUrl: './light.component.html',
+  templateUrl: '../socket/socket.component.html',
   styleUrls: [
     '../socket/socket.component.scss',
     '../device.scss',
@@ -22,16 +21,16 @@ export class DeviceLightComponent {
     private deviceApiService: DeviceApiService,
   ) { }
 
-  getSwitch(device: Device): boolean {
-    return getStatus(device, LightStatusCode.SWITCH);
+  get switch(): boolean {
+    return getStatus(this.device, LightStatusCode.SWITCH);
   }
 
-  toggleLight(device: Device): void {
-    if (!device.online) return;
+  toggleLight(): void {
+    if (!this.device.online) return;
 
-    const newValue = !this.getSwitch(device);
+    const newValue = !this.switch;
     this.deviceApiService.setDevice(
-      device.id,
+      this.device.id,
       [
         {
           code: LightStatusCode.SWITCH,
@@ -39,8 +38,8 @@ export class DeviceLightComponent {
         },
       ],
     ).subscribe(() => {
-      const index = getStatusIndex(device, LightStatusCode.SWITCH);
-      if (index !== undefined) device.status[index].value = newValue;
+      const index = getStatusIndex(this.device, LightStatusCode.SWITCH);
+      if (index !== undefined) this.device.status[index].value = newValue;
     });
   }
 }

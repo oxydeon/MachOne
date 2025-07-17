@@ -2,8 +2,7 @@
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
-import { Device } from '../../../api/models/device.model';
-import { ValveDevice, ValveStatusCode } from '../../../api/models/valve.model';
+import { ValveDevice, ValveMode, ValveState, ValveStatus, ValveStatusCode } from '../../../api/models/valve.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 import { deviceValues } from './config';
@@ -21,48 +20,31 @@ import { deviceValues } from './config';
 export class DeviceValveComponent {
   @Input({ required: true }) device!: ValveDevice;
   deviceValues = deviceValues;
+  valveMode = ValveMode;
+  valveState = ValveState;
 
   constructor(
     private deviceApiService: DeviceApiService,
   ) { }
 
-  getMode(device: Device): string {
-    return getStatus(device, ValveStatusCode.MODE);
+  get mode(): string {
+    return getStatus(this.device, ValveStatusCode.MODE);
   }
 
-  getState(device: Device): string {
-    return getStatus(device, ValveStatusCode.STATE);
+  get state(): string {
+    return getStatus(this.device, ValveStatusCode.STATE);
   }
 
-  getTemperatureSet(device: Device): number {
-    return (getStatus(device, ValveStatusCode.TEMPERATURE_SET) ?? 0) / 10;
+  get temperatureSet(): number {
+    return (getStatus(this.device, ValveStatusCode.TEMPERATURE_SET) ?? 0) / 10;
   }
 
-  getTemperature(device: Device): number {
-    return (getStatus(device, ValveStatusCode.TEMPERATURE) ?? 0) / 10;
+  get temperature(): number {
+    return (getStatus(this.device, ValveStatusCode.TEMPERATURE) ?? 0) / 10;
   }
 
-  setTemperature(device: Device, change: number): void {
-    const newTemp = (this.getTemperatureSet(device) + change) * 10;
-
+  set mode(newMode: string) {
     this.setValve(
-      device,
-      [
-        {
-          code: ValveStatusCode.TEMPERATURE_SET,
-          value: newTemp,
-        },
-      ],
-      () => {
-        const index = getStatusIndex(device, ValveStatusCode.TEMPERATURE_SET);
-        if (index !== undefined) device.status[index].value = newTemp;
-      },
-    );
-  }
-
-  setMode(device: Device, newMode: string): void {
-    this.setValve(
-      device,
       [
         {
           code: ValveStatusCode.MODE,
@@ -70,23 +52,38 @@ export class DeviceValveComponent {
         },
       ],
       () => {
-        const index = getStatusIndex(device, ValveStatusCode.MODE);
-        if (index !== undefined) device.status[index].value = newMode;
+        const index = getStatusIndex(this.device, ValveStatusCode.MODE);
+        if (index !== undefined) this.device.status[index].value = newMode;
       },
     );
   }
 
+  set temperatureSet(change: number) {
+    const newTemp = (this.temperatureSet + change) * 10;
+
+    this.setValve(
+      [
+        {
+          code: ValveStatusCode.TEMPERATURE_SET,
+          value: newTemp,
+        },
+      ],
+      () => {
+        const index = getStatusIndex(this.device, ValveStatusCode.TEMPERATURE_SET);
+        if (index !== undefined) this.device.status[index].value = newTemp;
+      },
+    );
+  }
   private setValve(
-    device: Device,
     commands: {
       code: string;
       value: unknown;
     }[],
     onSuccess: () => void,
   ): void {
-    if (!device.online) return;
+    if (!this.device.online) return;
 
-    this.deviceApiService.setDevice(device.id, commands)
+    this.deviceApiService.setDevice(this.device.id, commands)
       .pipe(
         tap(() => {
           onSuccess();
@@ -94,11 +91,11 @@ export class DeviceValveComponent {
         // wait for device to execute the command
         delay(environment.waitingDelay * 1000),
         // retrieve device status
-        switchMap(() => this.deviceApiService.getDevice(device.id)),
+        switchMap(() => this.deviceApiService.getDevice(this.device.id)),
       )
       .subscribe((result) => {
         // update device status
-        device.status = result.status;
+        this.device.status = result.status as ValveStatus[];
       });
   }
 }
