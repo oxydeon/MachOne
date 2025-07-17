@@ -1,13 +1,12 @@
-.turned-on {
-  background: linear-gradient(160deg, #ffb12c 0%, #aa6d00 100%);
+@reference "tailwindcss";
+
+.turned-off {
+  @apply text-gray-500;
 }
 
-.disabled {
-  opacity: 0.15;
-}
-
-.range-input {
+input[type="range"] {
   cursor: pointer;
+  accent-color: #535175;
   &:active {
     cursor: grab;
   }
