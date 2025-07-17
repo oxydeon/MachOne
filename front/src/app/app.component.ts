@@ -7,15 +7,18 @@ import { deviceTypes } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { Device } from './shared/api/models/device.model';
+import { DimmerSwitchDevice } from './shared/api/models/dimmer-switch.model';
+import { LightDevice } from './shared/api/models/light.model';
+import { SocketDevice } from './shared/api/models/socket.model';
+import { TemperatureDevice } from './shared/api/models/temperature.model';
+import { ValveDevice } from './shared/api/models/valve.model';
 import { DeviceApiService } from './shared/api/services/device-api.service';
+import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-switch/dimmer-switch.component';
 import { DeviceLightComponent } from './shared/device/components/light/light.component';
 import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
+import { DeviceTemperatureComponent } from './shared/device/components/temperature/temperature.component';
 import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
 import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
-import { DeviceTemperatureComponent } from './shared/device/components/temperature/temperature.component';
-import { AsTemperatureDevicePipe } from './shared/pipes/as-temperature-device.pipe';
-import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-switch/dimmer-switch.component';
-import { AsDimmerSwitchDevicePipe } from './shared/pipes/as-dimmer-switch-device.pipe';
 
 @Component({
   selector: 'app-root',
@@ -33,9 +36,7 @@ import { AsDimmerSwitchDevicePipe } from './shared/pipes/as-dimmer-switch-device
     DeviceLightComponent,
     DeviceValveComponent,
     DeviceTemperatureComponent,
-    AsTemperatureDevicePipe,
     DeviceDimmerSwitchComponent,
-    AsDimmerSwitchDevicePipe,
   ],
 })
 export class AppComponent implements OnInit {
@@ -95,5 +96,25 @@ export class AppComponent implements OnInit {
           (a, b) => this.devicesIds.indexOf(a.id) - this.devicesIds.indexOf(b.id),
         );
       });
+  }
+
+  isSocketDevice(device: Device): device is SocketDevice {
+    return this.deviceTypes.socket.includes(device.category);
+  }
+
+  isLightDevice(device: Device): device is LightDevice {
+    return this.deviceTypes.light.includes(device.category);
+  }
+
+  isValveDevice(device: Device): device is ValveDevice {
+    return this.deviceTypes.valve.includes(device.category);
+  }
+
+  isTemperatureDevice(device: Device): device is TemperatureDevice {
+    return this.deviceTypes.temperature.includes(device.category);
+  }
+
+  isDimmerSwitchDevice(device: Device): device is DimmerSwitchDevice {
+    return this.deviceTypes.dimmerSwitch.includes(device.category);
   }
 }

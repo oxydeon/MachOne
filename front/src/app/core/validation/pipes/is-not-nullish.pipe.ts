@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { isNotNullish } from '../util/is-nullish';
+import { isNullish } from '../utils/validation';
 
 @Pipe({
   name: 'isNotNullish',
@@ -9,7 +9,6 @@ import { isNotNullish } from '../util/is-nullish';
 export class IsNotNullishPipe implements PipeTransform {
 
   transform<T>(val: T): val is T {
-    return isNotNullish(val);
+    return !isNullish(val);
   }
-
 }
