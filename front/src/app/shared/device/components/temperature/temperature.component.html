@@ -2,47 +2,43 @@
   class="device"
   [class.offline]="!device.online"
 >
-  <div class="flex items-center justify-between mb-2">
-    <h2 class="font-semibold uppercase text-sm">
-      {{ device.name }}
-    </h2>
-    <div class="battery-status text-left">
-      @switch (batteryState) {
-        @case (TemperatureDeviceBatteryState.LOW) {
-          <span class="material-icons"> battery_2_bar </span>
-        }
-        @case (TemperatureDeviceBatteryState.MIDDLE) {
-          <span class="material-icons"> battery_4_bar </span>
-        }
-        @case (TemperatureDeviceBatteryState.HIGH) {
-          <span class="material-icons"> battery_std </span>
-          High
-        }
-      }
-    </div>
-  </div>
+  <h2 class="title">
+    {{ device.name }}
+  </h2>
 
-  <div class="flex relative w-full">
+  <div class="container w-full">
     <div
       class="content"
       [class.invisible]="!device.online"
     >
-      <div class="temperature text-left">
-        <span class="material-icons"> thermostat </span>
-        {{ temperature / 10 }} °{{ tempUnitConvert.toUpperCase() }}
+      <div class="status">
+        <span class="material-icons">thermostat</span>
+        {{ temperature }}°{{ tempUnitConvert.toUpperCase() }}
       </div>
-      <div class="humidity flex items-center justify-between">
-        <div>
-          <span class="material-icons"> water_drop </span>
-          {{ humidity }}%
-        </div>
-        <div class="flex flex-col space-y-3 absolute right-0 bottom-1">
-          @if (!device.online) {
-            <span class="material-icons">cloud_off</span>
+
+      <div class="status">
+        <span class="material-icons">water_drop</span>
+        {{ humidity }}%
+      </div>
+    </div>
+
+    <div class="icons">
+      @if (!device.online) {
+        <span class="material-icons">cloud_off</span>
+      } @else {
+        @switch (batteryState) {
+          @case (temperatureBatteryState.LOW) {
+            <span class="material-icons text-red-400">battery_1_bar</span>
           }
-          <span class="material-icons cursor-pointer">thermostat</span>
-        </div>
-      </div>
+          @case (temperatureBatteryState.MIDDLE) {
+            <span class="material-icons">battery_4_bar</span>
+          }
+          @case (temperatureBatteryState.HIGH) {
+            <span class="material-icons">battery_std</span>
+            High
+          }
+        }
+      }
     </div>
   </div>
 </div>

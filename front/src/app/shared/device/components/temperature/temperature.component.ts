@@ -1,7 +1,6 @@
-/* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
+import { TemperatureBatteryState, TemperatureDevice, TemperatureStatusCode } from '../../../api/models/temperature.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
-import { TemperatureDevice, TemperatureDeviceBatteryState, TemperatureStatusCode } from '../../../api/models/temperature-device.model';
 import { getStatus } from '../../utils/device.utils';
 
 @Component({
@@ -16,12 +15,10 @@ import { getStatus } from '../../utils/device.utils';
 })
 export class DeviceTemperatureComponent {
   @Input({ required: true }) device!: TemperatureDevice;
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  TemperatureDeviceBatteryState = TemperatureDeviceBatteryState;
+  temperatureBatteryState = TemperatureBatteryState;
 
   get temperature(): number {
-    return getStatus(this.device, TemperatureStatusCode.TEMPERATURE);
+    return (getStatus(this.device, TemperatureStatusCode.TEMPERATURE) ?? 0) / 10;
   }
 
   get humidity(): number {
@@ -33,7 +30,6 @@ export class DeviceTemperatureComponent {
   }
 
   get tempUnitConvert(): string {
-    return getStatus(this.device, TemperatureStatusCode.TEMP_UNIT_CONVERT);
+    return getStatus(this.device, TemperatureStatusCode.UNIT);
   }
-
 }
