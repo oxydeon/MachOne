@@ -11,6 +11,6 @@ import { Device } from '../../../api/models/device.model';
   ],
   standalone: true,
 })
-export class DeviceUnknowComponent {
+export class DeviceUnknownComponent {
   @Input({ required: true }) device!: Device;
 }

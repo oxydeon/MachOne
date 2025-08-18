@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { catchError } from 'rxjs';
 import { environment } from '../env';
 import { deviceTypes } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
+import { VibrationService } from './core/services/vibration.service';
 import { Device } from './shared/api/models/device.model';
 import { DimmerSwitchDevice } from './shared/api/models/dimmer-switch.model';
 import { LightDevice } from './shared/api/models/light.model';
@@ -17,7 +18,7 @@ import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-s
 import { DeviceLightComponent } from './shared/device/components/light/light.component';
 import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
 import { DeviceThermometerComponent } from './shared/device/components/thermometer/thermometer.component';
-import { DeviceUnknowComponent } from './shared/device/components/unknown/unknown.component';
+import { DeviceUnknownComponent } from './shared/device/components/unknown/unknown.component';
 import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
 
 @Component({
@@ -27,11 +28,12 @@ import { DeviceValveComponent } from './shared/device/components/valve/valve.com
   providers: [
     Api,
     DeviceApiService,
+    VibrationService,
   ],
   imports: [
     CoreModule,
     RouterModule,
-    DeviceUnknowComponent,
+    DeviceUnknownComponent,
     DeviceSocketComponent,
     DeviceLightComponent,
     DeviceValveComponent,
@@ -53,7 +55,13 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     public api: Api,
     private deviceApiService: DeviceApiService,
+    private vibrationService: VibrationService,
   ) { }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(): void {
+    this.vibrationService.vibrate(50);
+  }
 
   ngOnInit(): void {
     // retrieve credentials from query params
