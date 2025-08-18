@@ -11,3 +11,8 @@ input[type="range"] {
     cursor: grab;
   }
 }
+
+input[type="range"]:disabled {
+  cursor: default;
+  opacity: 0.2;
+}
