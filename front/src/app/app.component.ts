@@ -66,7 +66,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // retrieve credentials from query params
     this.route.queryParams.subscribe(({ appKey, secretKey, devices, lineBreaks }) => {
-      if (!appKey || !secretKey || !devices) return;
+      if (!appKey || !secretKey || !devices) {
+        this.api.clearAuth();
+        return;
+      }
 
       this.api.auth(appKey, secretKey);
       this.devicesIds = devices.split(',');

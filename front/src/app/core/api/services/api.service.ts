@@ -24,6 +24,11 @@ export class Api {
     this.secretKey = secretKey;
   }
 
+  clearAuth(): void {
+    this.appKey = undefined;
+    this.secretKey = undefined;
+  }
+
   get<T>(
     endpoint: string,
     query?: Query,
