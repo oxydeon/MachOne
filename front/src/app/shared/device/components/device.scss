@@ -3,7 +3,7 @@
 .device {
   height: 100%;
   background: #0b1739;
-  border: 0.1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #ffffff1a;
   border-radius: 25px;
   transition: all 0.3s;
   @apply p-5;
@@ -15,7 +15,7 @@
 
 .device.offline {
   background: #292c35;
-  border: 0.1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #ffffff1a;
 }
 
 .material-icons {
@@ -26,6 +26,7 @@
   @apply font-semibold;
   @apply uppercase;
   @apply text-sm;
+  @apply truncate;
 }
 
 .container {
