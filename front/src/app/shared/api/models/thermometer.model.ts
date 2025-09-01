@@ -21,7 +21,7 @@ export type ThermometerStatus =
 
 // https://developer.tuya.com/en/docs/iot/s?id=K9gf48k1c0sgo
 export enum ThermometerStatusCode {
-  TEMPERATURE = 'va_thermometer',
+  TEMPERATURE = 'va_temperature',
   HUMIDITY = 'va_humidity',
   BATTERY_STATE = 'battery_state',
   UNIT = 'temp_unit_convert',

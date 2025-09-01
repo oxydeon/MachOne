@@ -417,7 +417,7 @@ export const devices: Device[] = [
     online: true,
     status: [
       {
-        code: 'va_thermometer',
+        code: 'va_temperature',
         value: 210,
       },
       {
