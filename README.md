@@ -4,6 +4,8 @@ Web app to control Tuya devices
 
 ![screenshot](screenshot.png)
 
+All supported devices can be found [here](./front/src/app/config.ts)
+
 ## Use
 
 You can access app here:
