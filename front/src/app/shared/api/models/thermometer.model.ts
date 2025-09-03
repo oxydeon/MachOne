@@ -15,8 +15,12 @@ export type ThermometerStatus =
     value: ThermometerBatteryState;
   } |
   {
+    code: ThermometerStatusCode.BATTERY_PERCENTAGE;
+    value: number;
+  } |
+  {
     code: ThermometerStatusCode.UNIT;
-    value: string;
+    value: ThermometerTemperatureUnit;
   };
 
 // https://developer.tuya.com/en/docs/iot/s?id=K9gf48k1c0sgo
@@ -24,6 +28,7 @@ export enum ThermometerStatusCode {
   TEMPERATURE = 'va_temperature',
   HUMIDITY = 'va_humidity',
   BATTERY_STATE = 'battery_state',
+  BATTERY_PERCENTAGE = 'battery_percentage',
   UNIT = 'temp_unit_convert',
 }
 
@@ -31,4 +36,9 @@ export enum ThermometerBatteryState {
   LOW = 'low',
   MIDDLE = 'middle',
   HIGH = 'high',
+}
+
+export enum ThermometerTemperatureUnit {
+  CELSIUS = 'c',
+  FAHRENHEIT = 'f',
 }

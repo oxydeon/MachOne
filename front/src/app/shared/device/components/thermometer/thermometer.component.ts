@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ThermometerBatteryState, ThermometerDevice, ThermometerStatusCode } from '../../../api/models/thermometer.model';
+import { ThermometerBatteryState, ThermometerDevice, ThermometerStatusCode, ThermometerTemperatureUnit } from '../../../api/models/thermometer.model';
 import { DeviceApiService } from '../../../api/services/device-api.service';
 import { getStatus } from '../../utils/device.utils';
+import { deviceValues } from './config';
 
 @Component({
   selector: 'app-device-thermometer',
@@ -18,18 +19,32 @@ export class DeviceThermometerComponent {
   thermometerBatteryState = ThermometerBatteryState;
 
   get temperature(): number {
-    return (getStatus(this.device, ThermometerStatusCode.TEMPERATURE) ?? 0) / 10;
+    const temperature = (getStatus(this.device, ThermometerStatusCode.TEMPERATURE) ?? 0) / 10;
+
+    return this.tempUnitConvert === ThermometerTemperatureUnit.FAHRENHEIT
+      ? this.convertCelsiusToFahrenheit(temperature)
+      : temperature;
   }
 
   get humidity(): number {
     return getStatus(this.device, ThermometerStatusCode.HUMIDITY);
   }
 
-  get batteryState(): string {
-    return getStatus(this.device, ThermometerStatusCode.BATTERY_STATE);
+  get batteryState(): ThermometerBatteryState {
+    const batteryState = getStatus(this.device, ThermometerStatusCode.BATTERY_STATE);
+    if (batteryState) return batteryState;
+
+    const batteryPercentage: number = getStatus(this.device, ThermometerStatusCode.BATTERY_PERCENTAGE);
+    if (batteryPercentage < deviceValues.battery.low) return ThermometerBatteryState.LOW;
+    if (batteryPercentage < deviceValues.battery.middle) return ThermometerBatteryState.MIDDLE;
+    return ThermometerBatteryState.HIGH;
   }
 
   get tempUnitConvert(): string {
     return getStatus(this.device, ThermometerStatusCode.UNIT);
+  }
+
+  private convertCelsiusToFahrenheit(celsius: number): number {
+    return (celsius * 9 / 5) + 32;
   }
 }

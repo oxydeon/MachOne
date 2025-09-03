@@ -418,15 +418,15 @@ export const devices: Device[] = [
     status: [
       {
         code: 'va_temperature',
-        value: 210,
+        value: 240,
       },
       {
         code: 'va_humidity',
-        value: 30,
+        value: 56,
       },
       {
-        code: 'battery_state',
-        value: 'middle',
+        code: 'battery_percentage',
+        value: 53,
       },
       {
         code: 'temp_unit_convert',
