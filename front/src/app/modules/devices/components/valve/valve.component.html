@@ -1,5 +1,5 @@
 <div
-  class="device"
+  class="card device"
   [class.valve-auto]="mode === valveMode.AUTO"
   [class.valve-on]="state === valveState.OPEN"
   [class.offline]="!device.online"
@@ -13,7 +13,9 @@
       class="content"
       [class.invisible]="!device.online"
     >
-      <div class="degree text-center">{{ temperature }}°</div>
+      <div class="degree text-center">
+        <a [routerLink]="['/valve', device.id]"> {{ temperature }}° </a>
+      </div>
 
       <div
         class="set-degree"

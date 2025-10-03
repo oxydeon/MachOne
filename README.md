@@ -2,9 +2,10 @@
 
 Web app to control Tuya devices
 
-![screenshot](screenshot.png)
+![screenshot](./screenshots/devices.png)
+![screenshot](./screenshots/valve.png)
 
-All supported devices can be found [here](./front/src/app/config.ts)
+All supported devices can be found [here](./front/src/app/modules/devices/config.ts)
 
 ## Use
 

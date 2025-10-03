@@ -62,7 +62,7 @@ export class TuyaApiService {
 
     const timestamp = Date.now().toString();
 
-    // query fields must be sorted
+    // Query fields must be sorted
     const sortedQuery = Object.keys(query)
       .sort()
       .reduce(
