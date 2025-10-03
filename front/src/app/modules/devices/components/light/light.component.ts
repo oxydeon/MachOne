@@ -1,7 +1,6 @@
-/* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
-import { LightDevice, LightStatusCode } from '../../../api/models/light.model';
-import { DeviceApiService } from '../../../api/services/device-api.service';
+import { LightDevice, LightStatusCode } from '../../../../shared/api/models/light.model';
+import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 
 @Component({

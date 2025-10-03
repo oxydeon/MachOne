@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ThermometerBatteryState, ThermometerDevice, ThermometerStatusCode, ThermometerTemperatureUnit } from '../../../api/models/thermometer.model';
-import { DeviceApiService } from '../../../api/services/device-api.service';
+import { ThermometerBatteryState, ThermometerDevice, ThermometerStatusCode, ThermometerTemperatureUnit } from '../../../../shared/api/models/thermometer.model';
+import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { getStatus } from '../../utils/device.utils';
 import { deviceValues } from './config';
 

@@ -1,4 +1,4 @@
-import { Device } from '../../api/models/device.model';
+import { Device } from '../../../shared/api/models/device.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getStatus(device: Device, statusCode: string): any {

@@ -1,9 +1,8 @@
-/* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
-import { ValveDevice, ValveMode, ValveState, ValveStatus, ValveStatusCode } from '../../../api/models/valve.model';
-import { DeviceApiService } from '../../../api/services/device-api.service';
+import { ValveDevice, ValveMode, ValveState, ValveStatus, ValveStatusCode } from '../../../../shared/api/models/valve.model';
+import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 import { deviceValues } from './config';
 
