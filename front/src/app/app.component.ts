@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // retrieve credentials from query params
+    // Retrieve credentials from query params
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(({ appKey, secretKey }) => {

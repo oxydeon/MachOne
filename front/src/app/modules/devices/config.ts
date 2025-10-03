@@ -3,7 +3,8 @@ export const deviceTypes = {
   socket: [
     'cz', // socket
     'kg', // switch
-    'pc', // power strips
+    'tdq', // switch
+    'pc', // power strip
   ],
   light: [
     'dj', // light

@@ -1,5 +1,5 @@
 <div
-  class="device"
+  class="card device"
   [style]="{
     background: displayBrightnessBackground()
       ? `linear-gradient(
@@ -17,7 +17,7 @@
 
   <div class="container">
     <div
-      class="w-6/6"
+      class="col-span-6"
       [class.invisible]="!device.online"
     >
       @for (
@@ -26,11 +26,11 @@
         let index = $index
       ) {
         @if (getStatus(index, "status") | isNotNullish) {
-          <div class="flex space-x-1">
+          <div class="grid grid-cols-6 py-2">
             <input
               #ref
               type="range"
-              class="w-full"
+              class="col-span-5"
               [min]="getStatus(index, 'brightnessMin')"
               [max]="getStatus(index, 'brightnessMax')"
               [disabled]="!getStatus(index, 'status')"
@@ -39,7 +39,7 @@
             />
 
             <button
-              class="cursor-pointer pt-2 pl-2"
+              class="flex justify-end cursor-pointer"
               [class.turned-off]="!getStatus(index, 'status')"
               (click)="toggleLight(index)"
             >
