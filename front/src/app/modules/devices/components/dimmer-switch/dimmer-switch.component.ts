@@ -71,10 +71,10 @@ export class DeviceDimmerSwitchComponent {
 
   displayBrightnessBackground(): boolean {
     return this.device.online
-      // has only one switch
+      // Has only one switch
       && !!this.getStatus(0, 'brightness')
       && !this.getStatus(1, 'brightness')
-      // is turned on
+      // Is turned on
       && !!this.getStatus<boolean>(0, 'status');
   }
 }

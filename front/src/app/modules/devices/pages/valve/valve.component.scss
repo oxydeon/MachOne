@@ -1,0 +1,43 @@
+@use "../../../../../styles" as vars;
+@reference "tailwindcss";
+
+$max-chart-height: 650px;
+$breakpoint-height: calc(2 * vars.$margin-top + $max-chart-height);
+
+.main {
+  // New block formatting context, so .card's margin doesn't collapse into .main
+  display: flow-root;
+}
+
+.title {
+  @apply cursor-pointer;
+}
+
+.chart {
+  margin: 1rem 0;
+  height: calc(100% - 2rem);
+}
+
+@media (orientation: landscape) {
+  @media (min-height: $breakpoint-height) and (min-width: vars.$breakpoint-width) {
+    .main {
+      margin-top: vars.$margin-top;
+      @apply mx-5;
+      height: $max-chart-height;
+    }
+  }
+
+  @media (max-height: $breakpoint-height) or (max-width: vars.$breakpoint-width) {
+    .main {
+      margin-top: 0;
+      @apply mx-0;
+      height: 100%;
+    }
+  }
+}
+
+@media (orientation: portrait) {
+  .main {
+    height: 45vh;
+  }
+}
