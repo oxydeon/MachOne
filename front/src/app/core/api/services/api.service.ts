@@ -107,21 +107,21 @@ export class Api {
     );
   }
 
-  // get headers and params formatted
+  // Get headers and params formatted
   private getOptions(
     query: Query = {},
   ): {
       headers: HttpHeaders;
       params: Query;
     } {
-    // set query params
+    // Set query params
     const params = {
       ...query,
-      appKey: this.appKey || '',
-      secretKey: this.secretKey || '',
+      appKey: this.appKey ?? '',
+      secretKey: this.secretKey ?? '',
     };
 
-    // set content type if not file upload
+    // Set content type if not file upload
     const headers = new HttpHeaders()
       .append('Content-type', 'application/json');
 

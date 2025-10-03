@@ -1,0 +1,11 @@
+@use "../../../../../styles" as vars;
+@reference "tailwindcss";
+
+$breakpoint-height: calc(2 * vars.$margin-top + 450px);
+
+@media (min-height: $breakpoint-height) and (min-width: vars.$breakpoint-width) {
+  .main {
+    margin-top: vars.$margin-top;
+    @apply mx-5;
+  }
+}

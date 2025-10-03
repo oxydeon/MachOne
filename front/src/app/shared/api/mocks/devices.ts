@@ -145,7 +145,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'Les loupiotes',
+    name: 'Guirlande',
     online: true,
     status: [
       {
@@ -165,7 +165,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'L\'ampoule',
+    name: 'Ampoule',
     online: true,
     status: [
       {
@@ -205,7 +205,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'Le lampadaire',
+    name: 'Lampadaire',
     online: true,
     status: [
       {
@@ -241,7 +241,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'L\'abat-jour',
+    name: 'Abat-jour',
     online: true,
     status: [
       {
@@ -281,7 +281,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'Le vinyle',
+    name: 'Vinyle',
     online: true,
     status: [
       {
@@ -301,7 +301,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'La guirlande',
+    name: 'Terrasse',
     online: true,
     status: [
       {
@@ -333,7 +333,7 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'cz',
-    name: 'La lampe',
+    name: 'Lampe',
     online: false,
     status: [
       {

@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{api}}/devices/:id/logs?appKey={{appKey}}&secretKey={{secretKey}}&startTime=2025-01-01&endTime=2025-12-31
+  url: {{api}}/devices/:id/logs?appKey={{appKey}}&secretKey={{secretKey}}&startTime=2026-01-11T00:00:15.507Z&endTime=2026-01-12T00:00:15.507Z&codes=temp_current,work_state
   body: none
   auth: none
 }
@@ -13,9 +13,9 @@ get {
 params:query {
   appKey: {{appKey}}
   secretKey: {{secretKey}}
-  startTime: 2025-01-01
-  endTime: 2025-12-31
-  ~codes: mode,temp_set,work_state
+  startTime: 2026-01-11T00:00:15.507Z
+  endTime: 2026-01-12T00:00:15.507Z
+  codes: temp_current,work_state
 }
 
 params:path {

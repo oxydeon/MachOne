@@ -1,11 +1,7 @@
+@use "../../../../styles" as vars;
 @reference "tailwindcss";
 
 .device {
-  height: 100%;
-  @apply p-5;
-  background: #0b1739;
-  border: 1px solid #ffffff1a;
-  border-radius: 25px;
   transition: all 0.3s;
 
   &:hover {
@@ -15,12 +11,8 @@
 
 .device.offline {
   background: #292c35;
-  border: 1px solid #ffffff1a;
+  border: 1px solid vars.$card-border;
   pointer-events: none;
-}
-
-.material-icons {
-  font-size: 1.3rem;
 }
 
 .title {
@@ -31,21 +23,25 @@
 }
 
 .container {
-  @apply flex;
-  @apply relative;
-  @apply h-full;
+  @apply grid;
+  @apply grid-cols-6;
+  height: inherit;
 }
 
 .content {
+  @apply col-span-5;
   @apply text-sm;
-  @apply w-5/6;
 }
 
 .icons {
   @apply flex;
   @apply flex-col;
-  @apply absolute;
-  @apply right-0;
-  @apply bottom-6;
+  @apply justify-end;
   @apply space-y-3;
+  @apply pb-1;
+  text-align: right;
+}
+
+.material-icons {
+  font-size: 1.3rem;
 }

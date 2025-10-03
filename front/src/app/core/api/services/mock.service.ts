@@ -24,7 +24,7 @@ export class Mock {
     const genericEndpoint = urlElements
       .reduce(
         (acc: string[], el) => {
-          // replace id param with :id to always match the mock
+          // Replace id param with :id to always match the mock
           if (isValidParsedInteger(el)) {
             acc.push(':id');
           } else {
