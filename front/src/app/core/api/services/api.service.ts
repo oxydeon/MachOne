@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../env';
+import { Storage } from '../../storage/services/storage.service';
 import { Body, Query } from '../models/api.model';
 import { Mock } from './mock.service';
 
@@ -13,7 +14,11 @@ export class Api {
   constructor(
     private http: HttpClient,
     private mock: Mock,
-  ) { }
+    private storage: Storage,
+  ) {
+    this.appKey = this.storage.get('appKey');
+    this.secretKey = this.storage.get('secretKey');
+  }
 
   hasAuth(): boolean {
     return !!this.appKey && !!this.secretKey;
@@ -22,11 +27,8 @@ export class Api {
   auth(appKey: string, secretKey: string): void {
     this.appKey = appKey;
     this.secretKey = secretKey;
-  }
-
-  clearAuth(): void {
-    this.appKey = undefined;
-    this.secretKey = undefined;
+    this.storage.set('appKey', appKey);
+    this.storage.set('secretKey', secretKey);
   }
 
   get<T>(

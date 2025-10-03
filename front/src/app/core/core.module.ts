@@ -4,10 +4,13 @@ import { RouterModule } from '@angular/router';
 import { Api } from './api/services/api.service';
 
 @NgModule({
+  providers: [
+    Api,
+    Storage,
+  ],
   exports: [
     CommonModule,
     RouterModule,
   ],
-  providers: [Api],
 })
 export class CoreModule { }

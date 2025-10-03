@@ -1,0 +1,15 @@
+<div class="main">
+  <h2 class="title">
+    {{ device?.name }}
+  </h2>
+
+  <div class="mt-4">
+    <div class="chart-container">
+      <canvas id="chart">{{ chart }}</canvas>
+    </div>
+
+    <!-- @for (log of logs; track $index) {
+      <div>{{ log.code }}: {{ log.value }}</div>
+    } -->
+  </div>
+</div>

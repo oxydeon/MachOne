@@ -6,5 +6,8 @@ export const loadingTime = 0.3; // seconds
 
 export const mocks: MockConfig = {
   '/devices': { get: devices },
-  '/devices/:id': { post: {} },
+  '/devices/:id': {
+    get: devices[0],
+    post: {},
+  },
 };

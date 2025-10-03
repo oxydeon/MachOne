@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from '../../../core/api/services/api.service';
-import { Device } from '../models/device.model';
+import { Device, DeviceLogs } from '../models/device.model';
 
 @Injectable()
 export class DeviceApiService {
@@ -32,6 +32,24 @@ export class DeviceApiService {
     return this.api.post<void>(
       `${this.endpoint}/${deviceId}`,
       commands,
+    );
+  }
+
+  getLogs(
+    deviceId: string,
+    query: {
+      startTime: Date;
+      endTime: Date;
+      codes?: string[];
+    },
+  ): Observable<DeviceLogs> {
+    return this.api.get(
+      `${this.endpoint}/${deviceId}/logs`,
+      {
+        startTime: query.startTime.toISOString(),
+        endTime: query.endTime.toISOString(),
+        codes: query.codes?.join(',') || '',
+      },
     );
   }
 }

@@ -13,7 +13,12 @@
       class="content"
       [class.invisible]="!device.online"
     >
-      <div class="degree text-center">{{ temperature }}°</div>
+      <div
+        class="degree text-center cursor-pointer"
+        [routerLink]="['/valve', device.id]"
+      >
+        {{ temperature }}°
+      </div>
 
       <div
         class="set-degree"

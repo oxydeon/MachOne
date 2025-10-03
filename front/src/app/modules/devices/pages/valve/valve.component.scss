@@ -1,0 +1,9 @@
+@reference "tailwindcss";
+
+.main {
+  @apply m-4;
+  @apply p-5;
+  background: #0b1739;
+  border: 1px solid #ffffff1a;
+  border-radius: 25px;
+}
