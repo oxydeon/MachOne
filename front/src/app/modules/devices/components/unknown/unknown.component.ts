@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
 import { Component, Input } from '@angular/core';
-import { Device } from '../../../api/models/device.model';
+import { Device } from '../../../../shared/api/models/device.model';
 
 @Component({
   selector: 'app-device-unknown',

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IsNotNullishPipe } from '../../../../core/validation/pipes/is-not-nullish.pipe';
-import { DimmerSwitchDevice, DimmerSwitchItem, dimmerSwitchItemStatus } from '../../../api/models/dimmer-switch.model';
-import { DeviceApiService } from '../../../api/services/device-api.service';
+import { DimmerSwitchDevice, DimmerSwitchItem, dimmerSwitchItemStatus } from '../../../../shared/api/models/dimmer-switch.model';
+import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
 
 @Component({

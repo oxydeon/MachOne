@@ -7,6 +7,12 @@ import { deviceTypes } from './config';
 import { Api } from './core/api/services/api.service';
 import { CoreModule } from './core/core.module';
 import { VibrationService } from './core/services/vibration.service';
+import { DeviceDimmerSwitchComponent } from './modules/devices/components/dimmer-switch/dimmer-switch.component';
+import { DeviceLightComponent } from './modules/devices/components/light/light.component';
+import { DeviceSocketComponent } from './modules/devices/components/socket/socket.component';
+import { DeviceThermometerComponent } from './modules/devices/components/thermometer/thermometer.component';
+import { DeviceUnknownComponent } from './modules/devices/components/unknown/unknown.component';
+import { DeviceValveComponent } from './modules/devices/components/valve/valve.component';
 import { Device } from './shared/api/models/device.model';
 import { DimmerSwitchDevice } from './shared/api/models/dimmer-switch.model';
 import { LightDevice } from './shared/api/models/light.model';
@@ -14,12 +20,6 @@ import { SocketDevice } from './shared/api/models/socket.model';
 import { ThermometerDevice } from './shared/api/models/thermometer.model';
 import { ValveDevice } from './shared/api/models/valve.model';
 import { DeviceApiService } from './shared/api/services/device-api.service';
-import { DeviceDimmerSwitchComponent } from './shared/device/components/dimmer-switch/dimmer-switch.component';
-import { DeviceLightComponent } from './shared/device/components/light/light.component';
-import { DeviceSocketComponent } from './shared/device/components/socket/socket.component';
-import { DeviceThermometerComponent } from './shared/device/components/thermometer/thermometer.component';
-import { DeviceUnknownComponent } from './shared/device/components/unknown/unknown.component';
-import { DeviceValveComponent } from './shared/device/components/valve/valve.component';
 
 @Component({
   selector: 'app-root',
