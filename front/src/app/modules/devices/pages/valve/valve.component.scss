@@ -1,0 +1,55 @@
+@reference "tailwindcss";
+
+$margin-top: 13vh;
+$breakpoint-width: 1100px;
+$breakpoint-height: calc(2 * $margin-top + 580px);
+
+.main {
+  @apply m-4;
+  @apply p-5;
+  display: flex;
+  flex-direction: column;
+  background: #0b1739;
+  border: 1px solid #ffffff1a;
+  border-radius: 25px;
+}
+
+.title {
+  flex-shrink: 0;
+  @apply cursor-pointer;
+}
+
+.chart {
+  @apply mt-4;
+}
+
+@media (orientation: landscape) {
+  @media (min-height: $breakpoint-height) and (min-width: $breakpoint-width) {
+    .main {
+      // Need to add 1rem like device margin to have same margin-top as devices page
+      margin-top: calc($margin-top + 1rem);
+      @apply mx-8;
+    }
+
+    .chart {
+      height: 500px;
+    }
+  }
+  @media (max-height: $breakpoint-height) or (max-width: $breakpoint-width) {
+    .main {
+      // Need to remove 2rem like device margin to have same margin as devices page
+      height: calc(100vh - 2rem);
+    }
+
+    .chart {
+      height: 100%;
+      @apply mb-6;
+    }
+  }
+}
+
+@media (orientation: portrait) {
+  .chart {
+    height: 35vh;
+  }
+}

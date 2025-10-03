@@ -5,20 +5,9 @@
 html {
   max-width: 1400px;
   margin: 0 auto;
-  background-color: #081028;
+  background-color: #050b1c;
   color: whitesmoke;
-  cursor: default;
   user-select: none;
-}
-
-@media (min-width: 1100px) {
-  html {
-    margin: 15vh auto 0 auto;
-  }
-
-  body {
-    margin: 0 20px;
-  }
 }
 
 *:focus {

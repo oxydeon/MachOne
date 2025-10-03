@@ -117,8 +117,8 @@ export class Api {
     // set query params
     const params = {
       ...query,
-      appKey: this.appKey || '',
-      secretKey: this.secretKey || '',
+      appKey: this.appKey ?? '',
+      secretKey: this.secretKey ?? '',
     };
 
     // set content type if not file upload

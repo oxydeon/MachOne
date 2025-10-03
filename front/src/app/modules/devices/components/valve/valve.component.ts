@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { environment } from '../../../../../env';
+import { CoreModule } from '../../../../core/core.module';
 import { ValveDevice, ValveMode, ValveState, ValveStatus, ValveStatusCode } from '../../../../shared/api/models/valve.model';
 import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { getStatus, getStatusIndex } from '../../utils/device.utils';
@@ -15,6 +16,7 @@ import { deviceValues } from './config';
   ],
   standalone: true,
   providers: [DeviceApiService],
+  imports: [CoreModule],
 })
 export class DeviceValveComponent {
   @Input({ required: true }) device!: ValveDevice;
@@ -89,7 +91,7 @@ export class DeviceValveComponent {
           onSuccess();
         }),
         // wait for device to execute the command
-        delay(environment.waitingDelay * 1000),
+        delay(environment.deviceRetrieveDelay * 1000),
         // retrieve device status
         switchMap(() => this.deviceApiService.getDevice(this.device.id)),
       )

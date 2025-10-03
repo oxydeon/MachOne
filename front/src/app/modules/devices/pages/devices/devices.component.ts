@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { catchError } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { environment } from '../../../../../env';
-import { Api } from '../../../../core/api/services/api.service';
+import { ErrorModel } from '../../../../core/api/models/error.model';
 import { CoreModule } from '../../../../core/core.module';
 import { Device } from '../../../../shared/api/models/device.model';
 import { DimmerSwitchDevice } from '../../../../shared/api/models/dimmer-switch.model';
@@ -15,6 +15,7 @@ import { ValveDevice } from '../../../../shared/api/models/valve.model';
 import { DeviceApiService } from '../../../../shared/api/services/device-api.service';
 import { DeviceDimmerSwitchComponent } from '../../components/dimmer-switch/dimmer-switch.component';
 import { DeviceLightComponent } from '../../components/light/light.component';
+import { MessageComponent } from '../../components/message/message.component';
 import { DeviceSocketComponent } from '../../components/socket/socket.component';
 import { DeviceThermometerComponent } from '../../components/thermometer/thermometer.component';
 import { DeviceUnknownComponent } from '../../components/unknown/unknown.component';
@@ -24,13 +25,12 @@ import { deviceTypes } from '../../config';
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
+  styleUrls: ['./devices.component.scss'],
   standalone: true,
-  providers: [
-    Api,
-    DeviceApiService,
-  ],
+  providers: [DeviceApiService],
   imports: [
     CoreModule,
+    MessageComponent,
     DeviceUnknownComponent,
     DeviceSocketComponent,
     DeviceLightComponent,
@@ -40,20 +40,16 @@ import { deviceTypes } from '../../config';
   ],
 })
 export class DevicesComponent implements OnInit {
-  baseUrl = window.location.origin;
-  deviceTypes = deviceTypes;
-
   devicesIds: string[] = [];
   lineBreaks: number[] = [];
   devices?: Device[];
-  errorMessage?: string;
+  error?: ErrorModel;
   errorCount = 0;
 
   constructor(
     private route: ActivatedRoute,
     private destroyRef: DestroyRef,
     private deviceApiService: DeviceApiService,
-    public api: Api,
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +64,7 @@ export class DevicesComponent implements OnInit {
 
         setInterval(
           () => this.retrieveDevices(),
-          environment.refreshDelay * 1000,
+          environment.devicesRefreshDelay * 60 * 1000,
         );
       });
   }
@@ -78,17 +74,16 @@ export class DevicesComponent implements OnInit {
 
     this.deviceApiService.getDevices(this.devicesIds)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         catchError((e: HttpErrorResponse) => {
-          const { error, message } = e.error;
-          this.errorMessage = error && message ? `${error} - ${message}` : 'An error occurred';
+          this.error = e.error;
           this.errorCount += 1;
-
-          return [];
+          return of();
         }),
       )
       .subscribe((devices) => {
         // clear error
-        this.errorMessage = undefined;
+        this.error = undefined;
         this.errorCount = 0;
 
         // order devices
@@ -99,22 +94,22 @@ export class DevicesComponent implements OnInit {
   }
 
   isSocketDevice(device: Device): device is SocketDevice {
-    return this.deviceTypes.socket.includes(device.category);
+    return deviceTypes.socket.includes(device.category);
   }
 
   isLightDevice(device: Device): device is LightDevice {
-    return this.deviceTypes.light.includes(device.category);
+    return deviceTypes.light.includes(device.category);
   }
 
   isValveDevice(device: Device): device is ValveDevice {
-    return this.deviceTypes.valve.includes(device.category);
+    return deviceTypes.valve.includes(device.category);
   }
 
   isThermometerDevice(device: Device): device is ThermometerDevice {
-    return this.deviceTypes.thermometer.includes(device.category);
+    return deviceTypes.thermometer.includes(device.category);
   }
 
   isDimmerSwitchDevice(device: Device): device is DimmerSwitchDevice {
-    return this.deviceTypes.dimmerSwitch.includes(device.category);
+    return deviceTypes.dimmerSwitch.includes(device.category);
   }
 }

@@ -1,0 +1,12 @@
+@reference "tailwindcss";
+
+$margin-top: 13vh;
+$breakpoint-width: 1100px;
+$breakpoint-height: calc(2 * $margin-top + 450px);
+
+@media (min-height: $breakpoint-height) and (min-width: $breakpoint-width) {
+  .main {
+    margin-top: $margin-top;
+    @apply mx-4;
+  }
+}

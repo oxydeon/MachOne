@@ -1,0 +1,19 @@
+<div class="main">
+  <h2
+    class="title"
+    (click)="location.back()"
+  >
+    {{ device?.name }}
+  </h2>
+
+  <div class="chart">
+    <app-message
+      [hasData]="!!deviceLogsTemperature || !!deviceLogsTemperatureSet"
+      [error]="error"
+    />
+
+    <canvas [id]="chartName">
+      {{ chart }}
+    </canvas>
+  </div>
+</div>
