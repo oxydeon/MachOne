@@ -1,0 +1,55 @@
+<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-1">
+  @for (device of devices; track $index) {
+    <div class="m-3">
+      @if (isSocketDevice(device)) {
+        <app-device-socket [device]="device" />
+      } @else if (isLightDevice(device)) {
+        <app-device-light [device]="device" />
+      } @else if (isValveDevice(device)) {
+        <app-device-valve [device]="device" />
+      } @else if (isThermometerDevice(device)) {
+        <app-device-thermometer [device]="device" />
+      } @else if (isDimmerSwitchDevice(device)) {
+        <app-device-dimmer-switch [device]="device" />
+      } @else {
+        <app-device-unknown [device]="device" />
+      }
+    </div>
+
+    @if (lineBreaks.includes($index + 1)) {
+      <span class="col-span-full"></span>
+    }
+  }
+</div>
+
+<div class="text-center text-gray-500">
+  @if (!api.hasAuth()) {
+    <p class="text-xl">You need to provide credentials like this:</p>
+
+    <br />
+    <a
+      class="text-center text-gray-500"
+      [routerLink]="['/']"
+      [queryParams]="{
+        appKey: 'APP_KEY',
+        secretKey: 'SECRET_KEY',
+        devices: 'DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3',
+        lineBreaks: '2',
+      }"
+    >
+      {{
+        baseUrl
+      }}?appKey=APP_KEY&secretKey=SECRET_KEY&devices=DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3&lineBreaks=2
+    </a>
+  } @else if (api.hasAuth() && errorMessage) {
+    <p class="text-xl text-red-500">Error</p>
+    <p class="text-red-500">
+      {{ errorMessage }}
+    </p>
+  } @else if (api.hasAuth() && !devices) {
+    Loading...<br />
+    (it can take some time if free server needs to wake up)
+  } @else if (api.hasAuth() && devices?.length === 0) {
+    No devices found
+  }
+</div>
