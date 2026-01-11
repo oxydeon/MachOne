@@ -18,7 +18,7 @@ export const devices: Device[] = [
       },
       {
         code: 'temp_set',
-        value: 160,
+        value: 200,
       },
       {
         code: 'temp_current',
@@ -46,7 +46,7 @@ export const devices: Device[] = [
       },
       {
         code: 'temp_set',
-        value: 160,
+        value: 200,
       },
       {
         code: 'temp_current',
@@ -74,7 +74,7 @@ export const devices: Device[] = [
       },
       {
         code: 'temp_set',
-        value: 160,
+        value: 200,
       },
       {
         code: 'temp_current',
@@ -398,7 +398,7 @@ export const devices: Device[] = [
       },
       {
         code: 'bright_value_1',
-        value: 500,
+        value: 320,
       },
       {
         code: 'brightness_min_1',
@@ -413,16 +413,16 @@ export const devices: Device[] = [
   {
     id: '000',
     category: 'wsdcg',
-    name: 'Le thermomètre',
+    name: 'Thermomètre salon',
     online: true,
     status: [
       {
         code: 'va_temperature',
-        value: 240,
+        value: 212,
       },
       {
         code: 'va_humidity',
-        value: 56,
+        value: 46,
       },
       {
         code: 'battery_percentage',
