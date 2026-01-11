@@ -22,13 +22,12 @@
   }
 </div>
 
-<div class="text-center text-gray-500">
+<div class="flex flex-col items-center text-gray-500">
   @if (!api.hasAuth()) {
     <p class="text-xl">You need to provide credentials like this:</p>
-
     <br />
     <a
-      class="text-center text-gray-500"
+      class="text-gray-500"
       [routerLink]="['/']"
       [queryParams]="{
         appKey: 'APP_KEY',
@@ -37,9 +36,9 @@
         lineBreaks: '2',
       }"
     >
-      {{
-        baseUrl
-      }}?appKey=APP_KEY&secretKey=SECRET_KEY&devices=DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3&lineBreaks=2
+      {{ baseUrl }}
+      <br />?appKey=APP_KEY <br />&secretKey=SECRET_KEY
+      <br />&devices=DEVICE_ID_1,DEVICE_ID_2,DEVICE_ID_3 <br />&lineBreaks=2
     </a>
   } @else if (api.hasAuth() && errorMessage) {
     <p class="text-xl text-red-500">Error</p>
@@ -47,9 +46,7 @@
       {{ errorMessage }}
     </p>
   } @else if (api.hasAuth() && !devices) {
-    Loading...<br />
-    (it can take some time if free server needs to wake up)
-  } @else if (api.hasAuth() && devices?.length === 0) {
-    No devices found
+    <p>Loading...</p>
+    <p>(it can take some time if server needs to wake up)</p>
   }
 </div>
