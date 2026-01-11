@@ -16,7 +16,7 @@ export class AppComponent {
   ) { }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(): void {
-    this.vibrationService.vibrate(50);
+  onDocumentClick(event: Event): void {
+    this.vibrationService.vibrate(event, 50);
   }
 }
