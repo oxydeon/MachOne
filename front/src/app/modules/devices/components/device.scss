@@ -2,11 +2,11 @@
 
 .device {
   height: 100%;
+  @apply p-5;
   background: #0b1739;
   border: 1px solid #ffffff1a;
   border-radius: 25px;
   transition: all 0.3s;
-  @apply p-5;
 
   &:hover {
     transform: scale(1.02);

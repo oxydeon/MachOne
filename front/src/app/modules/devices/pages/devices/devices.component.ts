@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs';
 import { environment } from '../../../../../env';
@@ -50,29 +51,27 @@ export class DevicesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public api: Api,
+    private destroyRef: DestroyRef,
     private deviceApiService: DeviceApiService,
+    public api: Api,
   ) { }
 
   ngOnInit(): void {
     // retrieve credentials from query params
-    this.route.queryParams.subscribe(({ appKey, secretKey, devices, lineBreaks }) => {
-      if (!appKey || !secretKey || !devices) {
-        this.api.clearAuth();
-        return;
-      }
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ devices, lineBreaks }) => {
+        this.devicesIds = devices ? devices.split(',') : [];
+        this.lineBreaks = lineBreaks ? lineBreaks.split(',').map(Number) : [];
+        if (!this.devicesIds.length) return;
 
-      this.api.auth(appKey, secretKey);
-      this.devicesIds = devices.split(',');
-      this.lineBreaks = lineBreaks ? lineBreaks.split(',').map(Number) : [];
+        this.retrieveDevices();
 
-      this.retrieveDevices();
-
-      setInterval(
-        () => this.retrieveDevices(),
-        environment.refreshDelay * 1000,
-      );
-    });
+        setInterval(
+          () => this.retrieveDevices(),
+          environment.refreshDelay * 1000,
+        );
+      });
   }
 
   retrieveDevices(): void {

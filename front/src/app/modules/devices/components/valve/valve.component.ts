@@ -73,6 +73,7 @@ export class DeviceValveComponent {
       },
     );
   }
+
   private setValve(
     commands: {
       code: string;

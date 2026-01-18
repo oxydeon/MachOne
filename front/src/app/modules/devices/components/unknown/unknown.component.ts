@@ -4,10 +4,7 @@ import { Device } from '../../../../shared/api/models/device.model';
 @Component({
   selector: 'app-device-unknown',
   templateUrl: './unknown.component.html',
-  styleUrls: [
-    './unknown.component.scss',
-    '../device.scss',
-  ],
+  styleUrls: ['../device.scss'],
   standalone: true,
 })
 export class DeviceUnknownComponent {

@@ -1,19 +1,34 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../../env';
+import { Storage } from '../../storage/services/storage.service';
 import { Body, Query } from '../models/api.model';
 import { Mock } from './mock.service';
 
 @Injectable()
 export class Api {
-  private appKey?: string;
-  private secretKey?: string;
 
   constructor(
     private http: HttpClient,
     private mock: Mock,
+    private storage: Storage,
   ) { }
+
+  get appKey(): string | undefined {
+    return this.storage.get('appKey');
+  }
+
+  get secretKey(): string | undefined {
+    return this.storage.get('secretKey');
+  }
+
+  set appKey(value: string | undefined) {
+    this.storage.set('appKey', value);
+  }
+  set secretKey(value: string | undefined) {
+    this.storage.set('secretKey', value);
+  }
 
   hasAuth(): boolean {
     return !!this.appKey && !!this.secretKey;
@@ -24,15 +39,12 @@ export class Api {
     this.secretKey = secretKey;
   }
 
-  clearAuth(): void {
-    this.appKey = undefined;
-    this.secretKey = undefined;
-  }
-
   get<T>(
     endpoint: string,
     query?: Query,
   ): Observable<T> {
+    if (!this.hasAuth()) return of();
+
     if (this.mock.hasMock('get', endpoint)) {
       return this.mock.getMock('get', endpoint);
     }
@@ -48,6 +60,8 @@ export class Api {
     body?: Body,
     query?: Query,
   ): Observable<T> {
+    if (!this.hasAuth()) return of();
+
     if (this.mock.hasMock('post', endpoint)) {
       return this.mock.getMock('post', endpoint);
     }
@@ -64,6 +78,8 @@ export class Api {
     body?: Body,
     query?: Query,
   ): Observable<T> {
+    if (!this.hasAuth()) return of();
+
     if (this.mock.hasMock('patch', endpoint)) {
       return this.mock.getMock('patch', endpoint);
     }
@@ -79,6 +95,8 @@ export class Api {
     endpoint: string,
     query?: Query,
   ): Observable<T> {
+    if (!this.hasAuth()) return of();
+
     if (this.mock.hasMock('delete', endpoint)) {
       return this.mock.getMock('delete', endpoint);
     }

@@ -23,7 +23,7 @@
 </div>
 
 <div class="flex flex-col items-center text-gray-500">
-  @if (!api.hasAuth()) {
+  @if (!api.hasAuth() || !devicesIds.length) {
     <p class="text-xl">You need to provide credentials like this:</p>
     <br />
     <a
