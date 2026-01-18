@@ -18,12 +18,14 @@ export class DeviceThermometerComponent {
   @Input({ required: true }) device!: ThermometerDevice;
   thermometerBatteryState = ThermometerBatteryState;
 
-  get temperature(): number {
+  get temperature(): string {
     const temperature = (getStatus(this.device, ThermometerStatusCode.TEMPERATURE) ?? 0) / 10;
 
-    return this.tempUnitConvert === ThermometerTemperatureUnit.FAHRENHEIT
+    const value = this.tempUnitConvert === ThermometerTemperatureUnit.FAHRENHEIT
       ? this.convertCelsiusToFahrenheit(temperature)
       : temperature;
+
+    return value.toFixed(1);
   }
 
   get humidity(): number {
