@@ -1,0 +1,16 @@
+meta {
+  name: GET / (all)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{api}}/devices?appKey={{appKey}}&secretKey={{secretKey}}
+  body: none
+  auth: none
+}
+
+params:query {
+  appKey: {{appKey}}
+  secretKey: {{secretKey}}
+}

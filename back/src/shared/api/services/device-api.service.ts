@@ -8,15 +8,39 @@ import { TuyaApiService } from './tuya-api.service';
 export class DeviceApiService {
   private logger = new Logger(DeviceApiService.name);
 
+  // Avoid limitation of API
+  private maxDevicesListSize = 20;
+
   constructor(
     private tuyaApiService: TuyaApiService,
   ) { }
 
+  async getAllDevices(
+    appKey: string,
+    secretKey: string,
+  ): Promise<Device[]> {
+    return this.tuyaApiService.request<any>(
+      appKey,
+      secretKey,
+      'GET',
+      '/v2.0/cloud/thing/device',
+      { page_size: this.maxDevicesListSize },
+    );
+  }
+
   async getDevices(
     appKey: string,
     secretKey: string,
-    devices: string[],
+    devices?: string[],
   ): Promise<Device[]> {
+    let deviceIds = devices;
+
+    // If no devices specified, retrieve all devices
+    if (!devices?.length) {
+      const allDevices = await this.getAllDevices(appKey, secretKey);
+      deviceIds = allDevices.map((device) => device.id);
+    }
+
     this.logger.debug(`AppKey ***${appKey.slice(-4)} get ${devices.length} devices`);
 
     const result = await this.tuyaApiService.request<any>(
@@ -24,7 +48,7 @@ export class DeviceApiService {
       secretKey,
       'GET',
       '/v1.0/devices',
-      { device_ids: devices.join(',') },
+      { device_ids: deviceIds.join(',') },
     );
 
     return result.devices;

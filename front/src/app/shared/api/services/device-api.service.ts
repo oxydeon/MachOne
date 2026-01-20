@@ -14,7 +14,7 @@ export class DeviceApiService {
   getDevices(devices: string[]): Observable<Device[]> {
     return this.api.get(
       this.endpoint,
-      { devices: devices.join(',') },
+      devices.length ? { devices: devices.join(',') } : {},
     );
   }
 

@@ -20,7 +20,7 @@ export class AppController {
     return this.deviceApiService.getDevices(
       query.appKey,
       query.secretKey,
-      query.devices.split(','),
+      query.devices?.split(','),
     );
   }
 

@@ -4,7 +4,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs';
 import { environment } from '../../../../../env';
-import { deviceTypes } from '../../../../config';
 import { Api } from '../../../../core/api/services/api.service';
 import { CoreModule } from '../../../../core/core.module';
 import { Device } from '../../../../shared/api/models/device.model';
@@ -20,6 +19,7 @@ import { DeviceSocketComponent } from '../../components/socket/socket.component'
 import { DeviceThermometerComponent } from '../../components/thermometer/thermometer.component';
 import { DeviceUnknownComponent } from '../../components/unknown/unknown.component';
 import { DeviceValveComponent } from '../../components/valve/valve.component';
+import { deviceTypes } from '../../config';
 
 @Component({
   selector: 'app-devices',
@@ -63,7 +63,6 @@ export class DevicesComponent implements OnInit {
       .subscribe(({ devices, lineBreaks }) => {
         this.devicesIds = devices ? devices.split(',') : [];
         this.lineBreaks = lineBreaks ? lineBreaks.split(',').map(Number) : [];
-        if (!this.devicesIds.length) return;
 
         this.retrieveDevices();
 
